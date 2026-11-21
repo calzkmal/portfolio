@@ -30,10 +30,9 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${profile.name} — ${profile.title}`,
+    default: siteConfig.siteName,
     template: `%s | ${siteConfig.siteName}`,
   },
-  description: siteConfig.description,
   keywords: siteConfig.keywords,
   authors: [{ name: profile.name }],
   creator: profile.name,
@@ -43,13 +42,11 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.siteName,
-    title: `${profile.name} — ${profile.title}`,
-    description: siteConfig.description,
+    title: siteConfig.siteName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.title}`,
-    description: siteConfig.description,
+    title: siteConfig.siteName,
   },
   robots: { index: true, follow: true },
 };

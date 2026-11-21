@@ -5,7 +5,6 @@ import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Achievements",
-  description: "Competitions, leadership roles and programmes.",
   alternates: { canonical: "/achievements" },
 };
 

@@ -5,7 +5,6 @@ import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Education",
-  description: "Software Engineering at Universitas Pendidikan Indonesia and a student exchange at the University of Western Ontario.",
   alternates: { canonical: "/education" },
 };
 

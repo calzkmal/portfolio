@@ -4,10 +4,8 @@
  */
 
 export const siteConfig = {
-  /** Used in the browser tab title: "Page | Calzy". */
-  siteName: "Calzy Akmal Indyramdhani",
-  description:
-    "Portfolio of Calzy Akmal Indyramdhani — AI automation, data pipelines, LLM applications and iOS development projects, experience, education and achievements.",
+  /** Site title everywhere: browser tab, link previews ("Page | Calzy Portfolio" on inner pages). */
+  siteName: "Calzy Portfolio",
   keywords: [
     "portfolio",
     "Calzy Akmal Indyramdhani",

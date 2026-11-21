@@ -5,7 +5,6 @@ import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Projects in AI engineering, machine learning and data engineering, each with a full case study.",
   alternates: { canonical: "/projects" },
 };
 

@@ -16,6 +16,7 @@ import { projects } from "@/data/projects";
 import { education } from "@/data/education";
 import { achievements } from "@/data/achievements";
 import { siteConfig } from "@/data/site";
+import { displayName, focusAreas } from "@/data/home";
 
 const body = Work_Sans({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ const display = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: { absolute: `${profile.name} — ${profile.title}` },
+  title: { absolute: siteConfig.siteName },
   alternates: { canonical: "/" },
 };
 
@@ -42,18 +43,6 @@ const sections = [
   { id: "education", label: "Education" },
   { id: "recognition", label: "Recognition" },
   { id: "contact", label: "Contact" },
-];
-
-/** The name shown on the page (the full legal name stays in profile.name for metadata). */
-const displayName = "Calzy Indyramdhani";
-
-const focusAreas = [
-  "AI/ML Engineer",
-  "Data Engineer",
-  "Software Automation",
-  "iOS Development",
-  "Game Development",
-  "Product Research",
 ];
 
 /** "Bandung, Indonesia" → "Bandung". */

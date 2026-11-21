@@ -29,10 +29,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const url = `${siteConfig.url}/projects/${project.slug}`;
   return {
     title: project.title,
-    description: project.summary,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: { type: "article", url, title: project.title, description: project.summary },
-    twitter: { title: project.title, description: project.summary },
+    openGraph: { type: "article", url, title: project.title },
+    twitter: { title: project.title },
   };
 }
 

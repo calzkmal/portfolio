@@ -5,7 +5,6 @@ import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Experience",
-  description: "Work in AI automation, data science and iOS development: what each role involved and what it delivered.",
   alternates: { canonical: "/experience" },
 };
 
