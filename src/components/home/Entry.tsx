@@ -1,4 +1,5 @@
-import { Stamp } from "./Stamp";
+import Image from "next/image";
+import { EntryProjects } from "./EntryProjects";
 
 /** Centred section title with its "+subtitle" line; both reveal on scroll. */
 export function SectionHead({
@@ -21,37 +22,38 @@ export function SectionHead({
 const delay = (n: number) => (0.08 * n).toFixed(2);
 
 /**
- * One Experience or Education entry: stamp, title and details on the left,
+ * One Experience or Education entry: logo, title and details on the left,
  * numbered points and a closing result line on the right.
  */
 export function Entry({
-  stamp,
-  reverse,
+  logoSrc,
   title,
   meta,
   summary,
   tags,
   points,
   result,
+  projectSlugs,
 }: {
-  stamp?: { initials: string; ring: string };
-  /** Spin the stamp the other way (alternate entries). */
-  reverse: boolean;
+  logoSrc?: string;
   title: string;
   meta: string;
   summary: string;
   tags?: string[];
+  projectSlugs?: string[];
   points: { title?: string; text: string }[];
   result?: { label: string; text: string };
 }) {
   return (
     <article className="home-job">
       <div className="home-job-side" data-reveal>
-        {stamp && (
-          <Stamp
-            initials={stamp.initials}
-            ring={stamp.ring}
-            reverse={reverse}
+        {logoSrc && (
+          <Image
+            className="home-organization-logo"
+            src={logoSrc}
+            alt=""
+            width={112}
+            height={112}
           />
         )}
         <h3>{title}</h3>
@@ -81,6 +83,7 @@ export function Entry({
           </li>
         )}
       </ol>
+      {projectSlugs && <EntryProjects slugs={projectSlugs} />}
     </article>
   );
 }

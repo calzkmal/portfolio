@@ -1,21 +1,6 @@
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { MotionProvider } from "@/components/motion/MotionProvider";
+import { PageShell } from "@/components/page/PageShell";
 
-/**
- * Layout for the inner pages (Education, Experience, Projects, Achievements).
- * The home page has its own single-page layout and its own Lenis instance, so
- * MotionProvider (the inner pages' Lenis + GSAP setup) only runs here.
- */
+/** Layout for the works pages (/projects and each case study), in the same design as home. */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <Header />
-      <main id="main" className="relative flex-1">
-        {children}
-      </main>
-      <Footer />
-      <MotionProvider />
-    </>
-  );
+  return <PageShell>{children}</PageShell>;
 }

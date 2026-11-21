@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getAdjacentProjects, getProject, projects } from "@/data/projects";
-import { projectField } from "@/data/scenes";
+import { getProject, projects } from "@/data/projects";
 import { siteConfig } from "@/data/site";
-import { Button } from "@/components/ui/Button";
-import { Headline } from "@/components/ui/Headline";
-import { MetaList } from "@/components/ui/Meta";
-import { Plate } from "@/components/ui/Plate";
-import { TagList } from "@/components/ui/Tag";
-import { ProjectGallery } from "@/components/projects/ProjectGallery";
+import { Parallax } from "@/components/home/Parallax";
+import { ProjectArt, artBackground } from "@/components/home/ProjectArt";
+import { ScrollReveal } from "@/components/home/ScrollReveal";
+import { BackLink } from "@/components/page/BackLink";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -35,28 +32,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-/** Article section. Rendered only when it has content. */
-function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+/** One numbered chapter of the case study: label on the left, content on the right. */
+function Chapter({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
-    <section aria-labelledby={id} className="scroll-mt-24 border-t border-rule pt-8">
-      <h2 id={id} className="font-serif text-h2 text-ink">
-        {title}
+    <section className="case-chapter">
+      <h2 data-reveal>
+        <em>{String(n).padStart(2, "0")}</em> {title}
       </h2>
-      <div className="mt-6 max-w-measure space-y-4 text-ink-2">{children}</div>
+      <div className="case-chapter-body" data-reveal data-reveal-delay="0.08">
+        {children}
+      </div>
     </section>
   );
 }
 
-function Bullets({ items }: { items: string[] }) {
+function Points({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-3">
-      {items.map((item) => (
-        <li key={item} className="relative pl-5">
-          <span aria-hidden="true" className="absolute left-0 top-[0.7em] h-1 w-1 rounded-full bg-ink-3" />
-          {item}
+    <ol className="home-points case-points">
+      {items.map((item, i) => (
+        <li key={item}>
+          <em>#{i + 1}</em> {item}
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }
 
@@ -65,149 +63,142 @@ export default async function ProjectPage({ params }: PageProps) {
   const project = getProject(slug);
   if (!project) notFound();
 
-  const adjacent = getAdjacentProjects(project.slug);
-  const field = projectField[project.slug];
+  const [name, subtitle] = project.title.split(" — ");
+  const facts = [
+    { label: "Role", value: project.role },
+    { label: "Period", value: project.duration },
+    { label: "Year", value: project.year },
+    project.team ? { label: "Team", value: project.team } : null,
+  ].filter((f) => f !== null);
+
+  // Chapters appear only when they have content; numbering follows what is shown.
+  const chapters: { title: string; body: React.ReactNode }[] = [];
+  if (project.problem.length)
+    chapters.push({ title: "The problem", body: project.problem.map((p) => <p key={p}>{p}</p>) });
+  if (project.objectives.length)
+    chapters.push({ title: "What it set out to do", body: <Points items={project.objectives} /> });
+  if (project.solution.length)
+    chapters.push({ title: "How it works", body: project.solution.map((p) => <p key={p}>{p}</p>) });
+  if (project.features.length)
+    chapters.push({
+      title: "Key parts",
+      body: (
+        <dl className="case-features">
+          {project.features.map((f) => (
+            <div key={f.title}>
+              <dt>{f.title}</dt>
+              <dd>{f.description}</dd>
+            </div>
+          ))}
+        </dl>
+      ),
+    });
+  if (project.contributions.length)
+    chapters.push({
+      title: "My part",
+      body: (
+        <>
+          <p className="case-role">{project.role}</p>
+          <Points items={project.contributions} />
+        </>
+      ),
+    });
+  if (project.outcomes.length || project.outcomeSummary)
+    chapters.push({
+      title: "Outcome",
+      body: (
+        <>
+          {project.outcomes.length > 0 && (
+            <dl className="case-outcomes">
+              {project.outcomes.map((o) => (
+                <div key={o.label}>
+                  <dd>{o.value}</dd>
+                  <dt>{o.label}</dt>
+                </div>
+              ))}
+            </dl>
+          )}
+          {project.outcomeSummary && <p>{project.outcomeSummary}</p>}
+        </>
+      ),
+    });
 
   return (
-    <article>
-      <header className="container pt-10 sm:pt-16">
-        <Link href="/projects" className="link-draw inline-flex min-h-11 items-center text-small text-ink-2 hover:text-ink">
-          All projects
-        </Link>
-
-        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-8">
-            <p className="font-mono text-meta text-ink-3">
-              {project.category}, {project.year}
-            </p>
-            <Headline as="h1" size="h1" intro className="mt-4">
-              {project.title}
-            </Headline>
-            <p className="mt-8 max-w-lead text-lead text-ink-2">{project.overview}</p>
-
-            {(project.github || project.demo) && (
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-                {project.demo && <Button href={project.demo}>Open the live demo</Button>}
-                {project.github && (
-                  <Button href={project.github} variant="text">
-                    View the code on GitHub
-                  </Button>
-                )}
-              </div>
+    <article className="case">
+      <header className="case-hero home-col">
+        <BackLink />
+        <p className="case-kicker">
+          {project.category} · {project.year}
+        </p>
+        <h1 className="case-title" data-reveal="head">
+          {name}
+        </h1>
+        {subtitle && <p className="case-subtitle">{subtitle}</p>}
+        <p className="case-lead">{project.overview}</p>
+        {(project.demo || project.github) && (
+          <p className="case-links">
+            {project.demo && (
+              <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                Live demo ↗
+              </a>
             )}
-          </div>
-        </div>
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                Code on GitHub ↗
+              </a>
+            )}
+          </p>
+        )}
       </header>
 
-      <div className="container mt-14 sm:mt-20">
-        {project.gallery.length > 0 ? (
-          <ProjectGallery images={project.gallery} />
-        ) : (
-          field && (
-            <Plate
-              src={`/field/${field.state}.svg`}
-              alt=""
-              caption={field.caption}
-              illustrative
-              ratio="aspect-[16/9]"
-              priority
-              className="[&>div]:bg-sage/25"
-            />
-          )
-        )}
-      </div>
+      <figure className="case-visual" style={{ background: artBackground[project.slug] ?? "#f1efec" }} data-reveal>
+        <Parallax strength={-24}>
+          <ProjectArt slug={project.slug} title={project.title} />
+        </Parallax>
+      </figure>
 
-      <div className="container mt-16 grid gap-14 pb-24 lg:mt-24 lg:grid-cols-12 lg:gap-6">
-        <div className="min-w-0 space-y-16 lg:col-span-7">
-          {project.problem.length > 0 && (
-            <Section id="problem" title="The problem">
-              {project.problem.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </Section>
-          )}
-
-          {project.objectives.length > 0 && (
-            <Section id="objectives" title="What it set out to do">
-              <Bullets items={project.objectives} />
-            </Section>
-          )}
-
-          {project.solution.length > 0 && (
-            <Section id="solution" title="How it works">
-              {project.solution.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </Section>
-          )}
-
-          {project.features.length > 0 && (
-            <Section id="features" title="Key parts">
-              <dl className="space-y-5">
-                {project.features.map((f) => (
-                  <div key={f.title}>
-                    <dt className="font-semibold text-ink">{f.title}</dt>
-                    <dd className="mt-1">{f.description}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Section>
-          )}
-
-          {project.contributions.length > 0 && (
-            <Section id="contributions" title="My part">
-              <p className="font-medium text-ink">{project.role}</p>
-              <Bullets items={project.contributions} />
-            </Section>
-          )}
-
-          {(project.outcomes.length > 0 || project.outcomeSummary) && (
-            <Section id="outcomes" title="Outcome">
-              {project.outcomes.length > 0 && (
-                <dl className="grid gap-6 sm:grid-cols-2">
-                  {project.outcomes.map((o) => (
-                    <div key={o.label} className="flex flex-col-reverse">
-                      <dt className="mt-1 text-small text-ink-2">{o.label}</dt>
-                      <dd className="font-serif text-h2 text-ink">{o.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              {project.outcomeSummary && <p>{project.outcomeSummary}</p>}
-            </Section>
-          )}
-        </div>
-
-        <aside aria-label="Project facts" className="lg:col-span-4 lg:col-start-9">
-          <div className="space-y-8 lg:sticky lg:top-24">
-            <MetaList
-              items={[
-                { label: "Role", value: project.role },
-                { label: "Period", value: project.duration },
-                { label: "Year", value: project.year },
-                project.team ? { label: "Team", value: project.team } : null,
-              ]}
-            />
-            <div className="border-t border-rule pt-6">
-              <h2 className="text-meta text-ink-3">Stack</h2>
-              <TagList items={project.technologies} className="mt-3" />
+      <div className="home-col">
+        <dl className="case-facts" data-reveal>
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
             </div>
+          ))}
+        </dl>
+        <ul className="home-chips case-stack" aria-label="Stack" data-reveal>
+          {project.technologies.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+
+        {project.gallery.length > 0 && (
+          <div className="case-gallery">
+            {project.gallery.map((img) => (
+              <figure key={img.src} data-reveal>
+                <div className="case-gallery-frame">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 820px) 100vw, 780px"
+                    style={{ objectFit: img.fit ?? "cover" }}
+                  />
+                </div>
+                {img.caption && <figcaption>{img.caption}</figcaption>}
+              </figure>
+            ))}
           </div>
-        </aside>
+        )}
+
+        {chapters.map((c, i) => (
+          <Chapter key={c.title} n={i + 1} title={c.title}>
+            {c.body}
+          </Chapter>
+        ))}
       </div>
 
-      {adjacent && (
-        <nav aria-label="More projects" className="container grid border-t border-rule sm:grid-cols-2">
-          <Link href={`/projects/${adjacent.previous.slug}`} className="group py-10 sm:pr-6">
-            <span className="text-meta text-ink-3">Previous project</span>
-            <span className="link-draw mt-2 block w-fit font-serif text-h3 text-ink group-hover:[background-size:100%_1px]">{adjacent.previous.title}</span>
-          </Link>
-          <Link href={`/projects/${adjacent.next.slug}`} className="group border-t border-rule py-10 sm:border-l sm:border-t-0 sm:pl-6 sm:text-right">
-            <span className="text-meta text-ink-3">Next project</span>
-            <span className="link-draw mt-2 block w-fit font-serif text-h3 text-ink group-hover:[background-size:100%_1px] sm:ml-auto">{adjacent.next.title}</span>
-          </Link>
-        </nav>
-      )}
+      <ScrollReveal />
     </article>
   );
 }

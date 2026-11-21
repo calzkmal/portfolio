@@ -148,12 +148,3 @@ export const projects: Project[] = allProjects.filter((p) => !p.archived);
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
-
-export function getAdjacentProjects(slug: string): { previous: Project; next: Project } | null {
-  const index = projects.findIndex((p) => p.slug === slug);
-  if (index === -1 || projects.length < 2) return null;
-  return {
-    previous: projects[(index - 1 + projects.length) % projects.length],
-    next: projects[(index + 1) % projects.length],
-  };
-}

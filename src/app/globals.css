@@ -2,17 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ------------------------------------------------------------------
-   Base
-   ------------------------------------------------------------------ */
+/* The page design lives in components/home/home.css (+ components/page/page.css). */
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    font-synthesis: none; /* Instrument Serif has one weight: never fake-bold it */
   }
 
   body {
-    @apply bg-paper font-sans text-body text-ink antialiased;
+    @apply bg-paper text-ink antialiased;
   }
 
   h1,
@@ -23,84 +20,6 @@
 
   p {
     text-wrap: pretty;
-  }
-
-  ::selection {
-    @apply bg-ink text-paper;
-  }
-
-  :focus-visible {
-    outline: 2px solid theme("colors.ink.DEFAULT");
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  .on-ink :focus-visible {
-    outline-color: theme("colors.signal.DEFAULT");
-  }
-}
-
-/* ------------------------------------------------------------------
-   Components
-   ------------------------------------------------------------------ */
-@layer components {
-  /* Text link: underline draws on hover and focus. */
-  .link-draw {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 1px;
-    transition:
-      background-size 240ms cubic-bezier(0.215, 0.61, 0.355, 1),
-      color 120ms ease;
-  }
-  .link-draw:hover,
-  .link-draw:focus-visible {
-    background-size: 100% 1px;
-  }
-
-  /* Static link with a resting underline (inline links in prose). */
-  .link-line {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-    text-decoration-color: theme("colors.rule");
-    transition: text-decoration-color 120ms ease, color 120ms ease;
-  }
-  .link-line:hover,
-  .link-line:focus-visible {
-    text-decoration-color: currentColor;
-    color: theme("colors.signal.ink");
-  }
-
-  /* Line mask used by typographic reveals. */
-  .mask-line {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.08em; /* keep descenders inside the mask */
-    margin-bottom: -0.08em;
-  }
-  .mask-line > span {
-    display: block;
-  }
-
-}
-
-/* ------------------------------------------------------------------
-   Progressive enhancement hooks
-   `html.motion` is set by an inline script only when JS runs and the
-   visitor has not asked for reduced motion. Without it, everything is
-   visible and static.
-   ------------------------------------------------------------------ */
-html.motion [data-intro] {
-  visibility: hidden;
-  /* Safety net: if the intro timeline never runs, show content anyway. */
-  animation: intro-failsafe 0s linear 2.5s forwards;
-}
-
-@keyframes intro-failsafe {
-  to {
-    visibility: visible;
   }
 }
 

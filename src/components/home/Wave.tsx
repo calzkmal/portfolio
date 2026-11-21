@@ -12,8 +12,9 @@ export function Wave() {
 
   useEffect(() => {
     const path = pathRef.current;
-    const footer = path?.closest("footer");
-    if (!path || !footer || reduced) {
+    const wave = path?.ownerSVGElement;
+    const seam = document.getElementById("contact");
+    if (!path || !wave || !seam || reduced) {
       path?.setAttribute("d", STILL);
       return;
     }
@@ -31,13 +32,15 @@ export function Wave() {
     };
 
     const io = new IntersectionObserver(([entry]) => {
-      on = entry.isIntersecting;
+      on = entry.boundingClientRect.top <= (entry.rootBounds?.bottom ?? window.innerHeight);
+      wave.toggleAttribute("data-revealed", on);
       cancelAnimationFrame(raf);
       if (on) raf = requestAnimationFrame(draw);
     });
-    io.observe(footer);
+    io.observe(seam);
     return () => {
       on = false;
+      wave.removeAttribute("data-revealed");
       cancelAnimationFrame(raf);
       io.disconnect();
     };
