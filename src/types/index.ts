@@ -58,11 +58,11 @@ export interface Experience {
 }
 
 export type ProjectCategory =
-  | "Web Application"
   | "Data Engineering"
-  | "Analytics"
-  | "IT Operations"
-  | "Digitalization";
+  | "Machine Learning"
+  | "AI Engineering"
+  | "iOS App"
+  | "Automation";
 
 export interface ProjectImage {
   src: string;
@@ -91,14 +91,15 @@ export interface Project {
   archived?: boolean;
   role: string;
   duration: string;
-  team: string;
+  /** Optional; hidden when left out. */
+  team?: string;
   problem: string[];
   objectives: string[];
   solution: string[];
   features: { title: string; description: string }[];
   contributions: string[];
   outcomes: { value: string; label: string }[];
-  outcomeSummary: string;
+  outcomeSummary?: string;
   github?: string;
   demo?: string;
 }

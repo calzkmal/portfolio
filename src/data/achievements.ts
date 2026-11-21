@@ -6,23 +6,51 @@ import type { Achievement } from "@/types";
  */
 export const achievements: Achievement[] = [
   {
-    id: "kti-rxpo-farmasi-2024",
+    id: "very-disco-game-jam",
     category: "Competition",
-    title: "3rd Place — National Scientific Writing Competition (KTI)",
-    organization: "RXPO FARMASI 2024",
+    title: "3rd Place — Very Disco Local Game Jam",
+    organization: "Apple Developer Academy @ UC Jakarta",
+    date: "2026",
+    year: 2026,
+    description: "Won 3rd place at the Academy-level game jam with the StackHouse team.",
+  },
+  {
+    id: "tsdn-2024",
+    category: "Competition",
+    title: "1st Place — Turnamen Sains Data Nasional (TSDN) 2024",
+    organization: "Data Academy",
     date: "2024",
     year: 2024,
     description:
-      "Placed third in a national scientific writing competition held at RXPO FARMASI 2024.",
+      "Won first place with Hiroop, a respiration audio classifier that predicts five respiratory sound classes from WAV recordings.",
   },
   {
-    id: "mbkm-pmm-batch-2",
-    category: "Other",
-    title: "Pertukaran Mahasiswa Merdeka Batch 2 (MBKM)",
-    organization: "Institut Teknologi Sepuluh Nopember",
-    date: "Sep 2022 – Dec 2022",
-    year: 2022,
+    id: "iisma-alumni-club",
+    category: "Organization",
+    title: "Record Keeper — IISMA Alumni Club",
+    organization: "IISMA Alumni Club",
+    date: "Jan 2025 – Dec 2025",
+    year: 2025,
     description:
-      "Selected for the national MBKM student exchange programme at the Department of Computer Engineering, ITS Surabaya, studying Database, Data Structure and Front-End Web Development.",
+      "Integrated three platforms to streamline data collection and keep records reliable and accessible, and delivered 3+ actionable monthly reports for stakeholders.",
+  },
+  {
+    id: "himarpl",
+    category: "Organization",
+    title: "Executive Lead — Himpunan Mahasiswa Rekayasa Perangkat Lunak",
+    organization: "Universitas Pendidikan Indonesia",
+    date: "Jan 2023 – Dec 2023",
+    year: 2023,
+    description:
+      "Led eight departments and coordinated development initiatives for 50+ members, reaching 90% stakeholder satisfaction across 20+ work programs.",
+  },
+  {
+    id: "western-exchange",
+    category: "Other",
+    title: "Student Exchange — University of Western Ontario",
+    organization: "University of Western Ontario",
+    date: "Sep 2023 – Dec 2023",
+    year: 2023,
+    description: "One-semester student exchange in London, Canada, in the Faculty of Social Sciences.",
   },
 ];

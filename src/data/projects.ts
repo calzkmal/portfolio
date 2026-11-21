@@ -1,292 +1,144 @@
-import type { Project, ProjectImage } from "@/types";
+import type { Project } from "@/types";
 
 /**
- * Portfolio projects, based on the "Selected Projects" section of the CV.
+ * Portfolio projects, based on the "Projects" section of the CV.
  *
  * To add a project: copy one entry and change the `slug` (it becomes the URL:
- * /projects/<slug>). Screenshots live in /public/images/projects/<folder>/ —
- * the folder is passed to `cover()` and `shots()`. The card, filters, detail
- * page, sitemap and "next project" navigation all update automatically.
- *
- * Screenshots: the current images are generic placeholders. Replace them with
- * real .png / .jpg / .webp screenshots (recommended 1600×1000) and update the
- * file extensions below.
+ * /projects/<slug>). Images live in /public/images/projects/<folder>/.
+ * Add real screenshots to `gallery` (recommended 1600×1000). Sections whose
+ * list is empty (problem, features, outcomes…) are hidden on the detail page.
  */
 
-const base = (folder: string) => `/images/projects/${folder}`;
-const cover = (folder: string) => `${base(folder)}/cover.svg`;
-
-function shots(folder: string, alts: [string, string, string], captions: [string, string, string]): ProjectImage[] {
-  return alts.map((alt, i) => ({
-    src: `${base(folder)}/screen-${i + 1}.svg`,
-    alt,
-    caption: captions[i],
-  }));
-}
+const cover = (folder: string) => `/images/projects/${folder}/cover.svg`;
 
 /** Every project, including archived ones. Use `projects` below for anything shown on the site. */
 export const allProjects: Project[] = [
   {
-    slug: "repair-report",
-    archived: true, // hidden for now — set to false (or remove) to show it again
-    title: "Repair Report Web Application",
-    category: "Web Application",
-    year: "2025",
+    slug: "seagis",
     featured: true,
-    summary:
-      "A centralized web application that brings repair report forms, workflows, automation and image/document submission into a single platform.",
-    overview:
-      "The Repair Report Web Application replaces a multi-form, multi-platform reporting process with one place to submit, track and process repair reports. It was built together with Export Import users as an enhancement to the existing Repair Report dashboard and automation solution.",
-    thumbnail: cover("repair-report"),
-    thumbnailAlt: "Repair Report Web Application overview",
-    gallery: shots(
-      "repair-report",
-      [
-        "Repair report overview page",
-        "Repair report list and workflow status",
-        "Repair report submission form with image and document upload",
-      ],
-      ["Report overview", "Workflow tracking", "Report form with attachments"],
-    ),
-    technologies: ["React", "Vite", "JavaScript", "Power Automate", "Power BI", "UI/UX Design"],
-    role: "Full-Stack Developer",
-    duration: "Jul 2025 – Present",
-    team: "In collaboration with Export Import users",
-    problem: [
-      "Repair reporting was spread across multiple forms and platforms. Users had to fill in separate forms, send images and documents through different channels and follow up manually on each step of the process.",
-      "This made the process slow, harder to access and less reliable, even though a Repair Report dashboard and automation already existed.",
-    ],
-    objectives: [
-      "Integrate repair report forms, workflows, automation and attachments into a single platform.",
-      "Simplify the existing multi-form, multi-platform reporting process based on operational requirements.",
-      "Improve accessibility, efficiency and reliability of the end-to-end workflow.",
-      "Extend the existing Repair Report dashboard and automation solution.",
-    ],
-    solution: [
-      "I worked with Export Import users to understand the existing reporting process and its operational requirements, then designed a simpler end-to-end flow.",
-      "The application combines the report form, workflow process, automation and image/document submission in one responsive interface, and connects with the existing dashboard and automation so reports flow straight into monitoring.",
-    ],
-    features: [
-      { title: "Single platform", description: "Repair report forms, workflows and attachments live in one place." },
-      { title: "Image & document submission", description: "Supporting photos and files are uploaded directly with each report." },
-      { title: "Workflow automation", description: "Automated steps replace manual follow-ups between process stages." },
-      { title: "Responsive UI/UX", description: "A streamlined interface that works across desktop and mobile." },
-    ],
-    contributions: [
-      "Gathered and analysed requirements with Export Import users.",
-      "Designed the responsive UI/UX and end-to-end workflow.",
-      "Developed the full-stack web application and its integrations.",
-      "Integrated the application with the existing Repair Report dashboard and automation.",
-    ],
-    outcomes: [
-      { value: "1", label: "Platform replacing multiple forms" },
-      { value: "~80%", label: "Development completed" },
-      { value: "Next", label: "Production deployment" },
-    ],
-    outcomeSummary:
-      "The application is currently about 80% complete and in ongoing development toward production deployment.",
-  },
-  {
-    slug: "central-web-application",
-    title: "Cerea – Central Web Application",
-    category: "Web Application",
-    year: "2026",
-    featured: true,
-    summary:
-      "A central web application with a specialized UI that brings company systems together in one place and improves accessibility for users.",
-    overview:
-      "Cerea is a central web application that acts as the single entry point to the company's systems. As the frontend developer, I designed and built its specialized user interface — from wireframes and prototypes to responsive web pages — through continuous review cycles with the Digitalization Supervisor and Department Head.",
-    thumbnail: cover("cerea"),
-    thumbnailAlt: "Cerea logo",
-    // Screenshots use dummy data and Cerea branding only, to keep company data private.
-    gallery: [
-      {
-        src: `${base("cerea")}/loginpage.png`,
-        alt: "Cerea login page with username, password and Microsoft sign-in",
-        caption: "Login page — username/password or Microsoft sign-in",
-        fit: "contain",
-      },
-      {
-        src: `${base("cerea")}/portal.png`,
-        alt: "Cerea employee portal with announcements, frequently used apps and general apps",
-        caption: "Employee portal — announcements and app cards",
-      },
-      {
-        src: `${base("cerea")}/cerea-app-flow.svg`,
-        alt: "Cerea end-to-end flow diagram covering sign-in, roles, portal and admin workspace",
-        caption: "End-to-end flow — user, system and admin",
-        fit: "contain",
-      },
-    ],
-    technologies: ["React", "Vite", "JavaScript", "HTML", "CSS", "Wireframing", "Prototyping"],
-    role: "Frontend Developer",
-    duration: "Apr 2026 – Present",
-    team: "With the Digitalization Supervisor and Department Head",
-    problem: [
-      "Company applications and systems were scattered, so users had to remember different addresses and entry points to reach the tools they needed.",
-    ],
-    objectives: [
-      "Centralize company systems in a single web application.",
-      "Improve accessibility for users across departments.",
-      "Deliver a consistent, responsive and easy-to-use interface.",
-    ],
-    solution: [
-      "I started with wireframes and prototypes to define the structure and user flow, then developed a specialized frontend with responsive web interfaces.",
-      "The design and features were refined through continuous review and enhancement cycles with the Digitalization Supervisor and Department Head.",
-    ],
-    features: [
-      { title: "Central access", description: "One entry point to the company's applications and systems." },
-      { title: "Responsive interface", description: "Works consistently on desktop, tablet and mobile." },
-      { title: "Consistent design", description: "A unified visual language across the application." },
-      { title: "Iterative improvement", description: "Enhanced continuously based on stakeholder reviews." },
-    ],
-    contributions: [
-      "Designed the UI/UX, including wireframes, prototypes and responsive interfaces.",
-      "Developed the specialized frontend of the central web application.",
-      "Ran review and enhancement cycles with the Digitalization Supervisor and Department Head.",
-    ],
-    outcomes: [
-      { value: "1", label: "Central entry point for company systems" },
-      { value: "UI/UX", label: "Designed and built the frontend" },
-      { value: "Ongoing", label: "Continuous enhancement" },
-    ],
-    outcomeSummary:
-      "Cerea centralizes access to company systems and is continuously enhanced through review cycles with stakeholders.",
-  },
-  {
-    slug: "it-user-satisfaction",
-    archived: true, // hidden for now — set to false (or remove) to show it again
-    title: "IT User Satisfaction Analytics & Dashboard",
-    category: "Analytics",
-    year: "2025",
-    featured: true,
-    summary:
-      "An automated survey pipeline and Power BI dashboards for monitoring IT service performance and user satisfaction.",
-    overview:
-      "This project automates how IT user satisfaction surveys are collected and integrated, and turns the results into interactive Power BI dashboards. An end-to-end data pipeline keeps the reporting up to date in real time.",
-    thumbnail: cover("data-analytics"),
-    thumbnailAlt: "IT user satisfaction dashboard with KPI tiles and trend charts",
-    gallery: shots(
-      "data-analytics",
-      [
-        "IT user satisfaction overview with KPI tiles",
-        "Satisfaction breakdown by service and period",
-        "Survey response detail page",
-      ],
-      ["Satisfaction overview", "Breakdown by service", "Survey response details"],
-    ),
-    technologies: ["Microsoft Forms", "SharePoint", "Power Automate", "Power BI", "DAX", "Power Query"],
-    role: "Data Engineer",
-    duration: "Dec 2025 – Jan 2026",
-    team: "IT Digitalization team",
-    problem: [
-      "IT user satisfaction feedback had to be collected and compiled manually, which made it slow to turn survey responses into insight about IT service performance.",
-    ],
-    objectives: [
-      "Automate survey data collection and integration.",
-      "Build an end-to-end data pipeline for real-time analytics reporting.",
-      "Give IT a clear view of service performance and user satisfaction.",
-    ],
-    solution: [
-      "Survey responses are collected with Microsoft Forms and stored in SharePoint, with Power Automate handling the collection and integration automatically.",
-      "The resulting dataset feeds interactive Power BI dashboards that track IT service performance and user satisfaction over time.",
-    ],
-    features: [
-      { title: "Automated collection", description: "Survey responses flow from Microsoft Forms to SharePoint without manual work." },
-      { title: "End-to-end pipeline", description: "Data is integrated and refreshed for real-time reporting." },
-      { title: "Interactive dashboards", description: "Power BI reports to explore satisfaction and service performance." },
-    ],
-    contributions: [
-      "Automated survey data collection and integration with Power Automate.",
-      "Developed the end-to-end data pipeline.",
-      "Designed and built the Power BI dashboards.",
-    ],
-    outcomes: [
-      { value: "Automated", label: "Survey data collection" },
-      { value: "Real-time", label: "Analytics reporting" },
-      { value: "Power BI", label: "Interactive dashboards" },
-    ],
-    outcomeSummary:
-      "Survey collection is now automated and IT can monitor service performance and user satisfaction through always-up-to-date dashboards.",
-  },
-  {
-    slug: "safety-induction",
-    featured: true,
-    title: "Safety Induction Data Pipeline",
+    title: "Seagis iOS App",
     category: "Data Engineering",
-    year: "2025",
+    year: "2026",
     summary:
-      "An event-driven pipeline that replaced manual spreadsheet tracking with validated, approved and centrally stored safety induction records that refresh automatically for compliance monitoring.",
+      "An environmental data pipeline for an iOS app that integrates IoT temperature readings with regional data, with data contracts and quality checks for traceable, hourly alignment.",
     overview:
-      "Safety induction records used to live in hand-maintained monthly spreadsheets. I designed and built the data workflow that replaced them: submissions are captured at the source, routed through a human approval gate, enriched with an expiry date and written to one central store that feeds a scheduled analytics model. The visuals on this page are illustrative and anonymized — they do not show the company's actual system, dashboard or data.",
-    thumbnail: cover("safety-induction"),
-    thumbnailAlt: "Illustrative five-step data pipeline: capture, ingest, approve, enrich and store, serve",
-    gallery: [
-      {
-        src: `${base("safety-induction")}/architecture.svg`,
-        alt: "Pipeline architecture: sources, ingestion, approval gate, transformation, central store and analytics model",
-        caption: "Pipeline architecture — illustrative and simplified",
-        fit: "contain",
-      },
-      {
-        src: `${base("safety-induction")}/record-lifecycle.svg`,
-        alt: "One anonymized record moving from raw submission to approved, enriched and classified by status",
-        caption: "One record, end to end — anonymized example",
-        fit: "contain",
-      },
-    ],
-    technologies: [
-      "Power Automate",
-      "Microsoft Forms",
-      "Teams Approvals",
-      "SharePoint Lists",
-      "Excel",
-      "Power BI",
-      "DAX",
-      "Data Modeling",
-    ],
-    role: "Data Engineering & Analytics",
-    duration: "Dec 2025 – Jan 2026",
-    team: "IT Digitalization team, with the safety (HSE) department as business owner",
-    problem: [
-      "Safety induction records were typed by hand into monthly spreadsheets. Manual entry was slow and error-prone, history was split across files, and there was no reliable way to see in real time who held a valid induction, whose was about to expire and whose had already lapsed.",
-      "Because expiry dates were worked out by hand, the same person could appear with different statuses depending on which file you opened — there was no single source of truth to report from.",
-    ],
+      "Seagis is an iOS app backed by an environmental data pipeline. As Data Orchestrator, I built the pipeline that brings IoT temperature readings and regional data together, and used Spec-Driven Development to define the implementation scope and testable requirements.",
+    thumbnail: cover("seagis"),
+    thumbnailAlt: "Seagis iOS App project cover",
+    gallery: [],
+    technologies: ["Swift", "Python", "PostgreSQL", "Supabase", "GitHub", "Spec-Driven Development"],
+    role: "Data Orchestrator",
+    duration: "Oct 2026 – Present",
+    problem: [],
     objectives: [
-      "Capture induction data digitally at the source instead of re-typing it.",
-      "Make sure only reviewed and approved records can ever count as valid.",
-      "Calculate expiry dates automatically and consistently for every record.",
-      "Consolidate historical and new records into one central, access-controlled store.",
-      "Keep the analytics layer up to date without manual exports.",
+      "Integrate IoT temperature readings with regional data.",
+      "Keep data traceable and aligned on an hourly basis.",
+      "Define a clear implementation scope with testable requirements.",
     ],
     solution: [
-      "I designed the flow as an event-driven pipeline. Each new submission triggers an automated flow that maps the form fields to a defined schema and sends the record to the safety team for review through an in-chat approval step — a human-in-the-loop quality gate.",
-      "Once a decision comes back, the flow enriches the record: it writes the approval status and calculates the expiry date from the induction date and the validity period, then stores or updates the record in a central list that acts as the single source of truth. Rejected records are kept with their status so the history stays complete, but they can never count as valid.",
-      "Historical spreadsheet records were loaded into the same store so old and new data share one structure. A scheduled refresh feeds an analytics model, where days remaining are derived and each record is classified as valid, expiring soon or expired.",
+      "I built an environmental data pipeline that integrates IoT temperature readings and regional data, and designed data contracts and quality checks so the data stays traceable and aligned hour by hour.",
+      "I applied Spec-Driven Development (SDD) to define the implementation scope and testable requirements.",
     ],
     features: [
-      { title: "Event-driven ingestion", description: "The pipeline runs on every new submission — no batch uploads or manual copying." },
-      { title: "Approval quality gate", description: "Records only become valid after a human review, keeping bad data out of reporting." },
-      { title: "Automated enrichment", description: "Expiry dates are calculated in the flow, so every report uses the same value." },
-      { title: "Single source of truth", description: "Historical and new records live in one central, permission-controlled store." },
-      { title: "Status classification", description: "Valid, expiring soon and expired states are derived consistently at each refresh." },
-      { title: "Documented for handover", description: "Technical documentation and UML diagrams describe the data flow end to end." },
+      { title: "IoT + regional data", description: "Temperature readings from IoT devices joined with regional data." },
+      { title: "Data contracts", description: "Defined contracts describe what each data source must provide." },
+      { title: "Quality checks", description: "Checks keep the data traceable and aligned hour by hour." },
     ],
     contributions: [
-      "Gathered requirements with the safety (HSE) team and translated them into data fields, rules and a target data model.",
-      "Designed the end-to-end pipeline architecture, from source capture to the analytics layer.",
-      "Built the automation flows: submission trigger, approval routing, status write-back and expiry date calculation.",
-      "Designed the central data store schema and loaded the historical spreadsheet records into it.",
-      "Connected the analytics model with a scheduled refresh and implemented the status classification logic.",
-      "Authored the technical documentation and UML diagrams for the project.",
+      "Built the environmental data pipeline.",
+      "Designed the data contracts and quality checks.",
+      "Applied Spec-Driven Development to scope the implementation and its requirements.",
+    ],
+    outcomes: [],
+  },
+  {
+    slug: "hiroop",
+    featured: true,
+    title: "Hiroop — Respiration Audio Classifier",
+    category: "Machine Learning",
+    year: "2024",
+    summary:
+      "A Flask API that processes WAV recordings and predicts five respiratory sound classes. Won 1st place at Turnamen Sains Data Nasional (TSDN) 2024.",
+    overview:
+      "Hiroop classifies respiratory sounds from audio recordings. I built the audio feature extraction pipeline and the Flask API that serves the model's predictions. The project won first place at Turnamen Sains Data Nasional (TSDN) 2024.",
+    thumbnail: cover("hiroop"),
+    thumbnailAlt: "Hiroop respiration audio classifier project cover",
+    gallery: [],
+    technologies: ["Python", "Flask", "TensorFlow", "Keras", "Librosa", "NumPy", "REST API"],
+    role: "Machine Learning Engineer",
+    duration: "Nov 2024 – Dec 2024",
+    problem: [],
+    objectives: [
+      "Classify WAV recordings into five respiratory sound classes.",
+      "Serve predictions through a REST API.",
+    ],
+    solution: [
+      "I developed an audio feature extraction pipeline using MFCC, Mel spectrograms and chroma features, and trained the classifier with TensorFlow and Keras.",
+      "A Flask API accepts WAV recordings, runs them through the pipeline and returns a prediction across the five classes.",
+    ],
+    features: [
+      { title: "Audio feature extraction", description: "MFCC, Mel spectrogram and chroma features extracted with Librosa." },
+      { title: "Five-class prediction", description: "Each recording is classified into one of five respiratory sound classes." },
+      { title: "REST API", description: "A Flask endpoint takes a WAV file and returns the prediction." },
+    ],
+    contributions: [
+      "Built the audio feature extraction pipeline.",
+      "Built the Flask API that processes recordings and returns predictions.",
     ],
     outcomes: [
-      { value: "Event-driven", label: "Ingestion replaced manual data entry" },
-      { value: "1", label: "Central source of truth for induction records" },
-      { value: "3", label: "Status states derived automatically" },
+      { value: "1st", label: "Place at TSDN 2024" },
+      { value: "5", label: "Respiratory sound classes" },
     ],
-    outcomeSummary:
-      "Induction records now flow from submission to reporting without manual re-entry. Every valid record has passed a review, expiry dates are consistent, and the safety team can see upcoming and lapsed inductions as soon as the data refreshes.",
+    outcomeSummary: "Hiroop won first place at Turnamen Sains Data Nasional (TSDN) 2024, organized by Data Academy.",
+  },
+  {
+    slug: "emodu",
+    featured: true,
+    title: "Emodu — LLM Fine-Tuning for Affective Text Generation",
+    category: "AI Engineering",
+    year: "2025",
+    summary:
+      "Llama 3.2 1B fine-tuned with LoRA to generate emotion-aware motivational text for students, improving BERTScore F1 from 0.6878 to 0.7238 over the base model.",
+    overview:
+      "Emodu generates motivational text for students that responds to how they feel. I fine-tuned Llama 3.2 1B with LoRA and evaluated it against the base model.",
+    thumbnail: cover("emodu"),
+    thumbnailAlt: "Emodu LLM fine-tuning project cover",
+    gallery: [],
+    technologies: [
+      "Python",
+      "Llama 3.2 1B",
+      "Unsloth",
+      "PEFT/LoRA",
+      "Ollama",
+      "FastAPI",
+      "Hugging Face",
+      "ROUGE",
+      "BERTScore",
+    ],
+    role: "AI Engineer",
+    duration: "Dec 2024 – Jan 2025",
+    problem: [],
+    objectives: [
+      "Generate emotion-aware motivational text for students.",
+      "Measure the improvement over the base model.",
+    ],
+    solution: [
+      "I fine-tuned Llama 3.2 1B with LoRA (PEFT, Unsloth) and evaluated it with ROUGE and BERTScore on 112 test examples.",
+    ],
+    features: [
+      { title: "LoRA fine-tuning", description: "Parameter-efficient fine-tuning of Llama 3.2 1B." },
+      { title: "Affective generation", description: "Motivational text that takes the student's emotion into account." },
+      { title: "Evaluation", description: "Compared against the base model with ROUGE and BERTScore." },
+    ],
+    contributions: [
+      "Fine-tuned Llama 3.2 1B using LoRA.",
+      "Evaluated the model against the base model on 112 test examples.",
+    ],
+    outcomes: [
+      { value: "0.7238", label: "BERTScore F1 (base model: 0.6878)" },
+      { value: "112", label: "Test examples evaluated" },
+    ],
+    outcomeSummary: "The fine-tuned model improved BERTScore F1 from 0.6878 to 0.7238 compared with the base model.",
   },
 ];
 

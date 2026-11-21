@@ -102,7 +102,7 @@ export default async function ProjectPage({ params }: PageProps) {
     { icon: Calendar, label: "Year", value: project.year },
     { icon: Clock, label: "Duration", value: project.duration },
     { icon: Users, label: "Team", value: project.team },
-  ];
+  ].filter((f): f is typeof f & { value: string } => Boolean(f.value));
 
   return (
     <article>
@@ -150,6 +150,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
       <div className="container mt-16 grid gap-12 lg:grid-cols-[1fr_300px] lg:gap-16">
         <div className="min-w-0 space-y-14">
+          {project.problem.length > 0 && (
           <Section id="problem" icon={Target} title="The problem">
             <div className="space-y-4 leading-relaxed text-ink-soft">
               {project.problem.map((p) => (
@@ -157,10 +158,13 @@ export default async function ProjectPage({ params }: PageProps) {
               ))}
             </div>
           </Section>
+          )}
 
+          {project.objectives.length > 0 && (
           <Section id="objectives" icon={CheckCircle2} title="Objectives">
             <Bullets items={project.objectives} />
           </Section>
+          )}
 
           <Section id="solution" icon={Layers} title="Solution & implementation">
             <div className="space-y-4 leading-relaxed text-ink-soft">
@@ -170,6 +174,7 @@ export default async function ProjectPage({ params }: PageProps) {
             </div>
           </Section>
 
+          {project.features.length > 0 && (
           <Reveal>
             <section aria-labelledby="features" className="scroll-mt-24">
               <h2 id="features" className="font-display text-2xl font-medium tracking-tight">
@@ -185,6 +190,7 @@ export default async function ProjectPage({ params }: PageProps) {
               </ul>
             </section>
           </Reveal>
+          )}
 
           <Section id="contributions" icon={User} title="My role & contributions">
             <p className="mb-4 text-ink-soft">
@@ -193,11 +199,13 @@ export default async function ProjectPage({ params }: PageProps) {
             <Bullets items={project.contributions} />
           </Section>
 
+          {(project.outcomes.length > 0 || project.outcomeSummary) && (
           <Reveal>
             <section aria-labelledby="outcomes" className="scroll-mt-24">
               <h2 id="outcomes" className="font-display text-2xl font-medium tracking-tight">
                 Outcomes &amp; impact
               </h2>
+              {project.outcomes.length > 0 && (
               <ul className="mt-5 grid gap-4 sm:grid-cols-3">
                 {project.outcomes.map((o) => (
                   <li key={o.label} className="rounded-2xl bg-accent-soft p-5">
@@ -208,9 +216,13 @@ export default async function ProjectPage({ params }: PageProps) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 leading-relaxed text-ink-soft">{project.outcomeSummary}</p>
+              )}
+              {project.outcomeSummary && (
+                <p className="mt-5 leading-relaxed text-ink-soft">{project.outcomeSummary}</p>
+              )}
             </section>
           </Reveal>
+          )}
         </div>
 
         <aside aria-label="Project facts" className="lg:sticky lg:top-24 lg:self-start">

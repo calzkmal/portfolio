@@ -4,20 +4,21 @@
  */
 
 export const siteConfig = {
-  /** Used in the browser tab title: "Page | Nurhalimah". */
-  siteName: "Nurhalimah",
+  /** Used in the browser tab title: "Page | Calzy". */
+  siteName: "Calzy Akmal Indyramdhani",
   description:
-    "Portfolio of Nurhalimah — data engineering, data analytics, business intelligence and full-stack development projects, experience, education and achievements.",
+    "Portfolio of Calzy Akmal Indyramdhani — AI automation, data pipelines, LLM applications and iOS development projects, experience, education and achievements.",
   keywords: [
     "portfolio",
-    "Nurhalimah",
-    "data engineer",
-    "data analyst",
-    "business intelligence",
-    "Power BI",
-    "Microsoft Fabric",
-    "full-stack developer",
-    "IT digitalization",
+    "Calzy Akmal Indyramdhani",
+    "software engineer",
+    "AI automation",
+    "LLM",
+    "data pipeline",
+    "machine learning",
+    "n8n",
+    "Python",
+    "iOS developer",
   ],
   /**
    * Canonical URL. Set NEXT_PUBLIC_SITE_URL on your host (see .env.example).

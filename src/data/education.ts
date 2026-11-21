@@ -1,53 +1,35 @@
 import type { Education } from "@/types";
 
 /**
- * Education history, newest first. PLACEHOLDER content — replace with your own.
+ * Education history, newest first.
  */
 export const education: Education[] = [
   {
-    id: "bsc",
-    institution: "Universitas Sumatera Utara",
-    degree: "S.Kom.",
-    field: "Computer Science",
-    location: "Medan, Indonesia",
-    period: "2021 – 2025",
+    id: "upi",
+    institution: "Universitas Pendidikan Indonesia",
+    degree: "Bachelor's Degree",
+    field: "Software Engineering",
+    location: "Bandung, Indonesia",
+    period: "Aug 2021 – Jan 2025",
     graduationYear: "2025",
-    grade: "GPA (3.83/4.00)",
-    summary:
-      "Graduate programme focused on distributed systems, data platforms and applied machine learning.",
+    grade: "GPA 3.90 / 4.00",
+    summary: "Bachelor's degree in Software Engineering.",
     highlights: [
-      "Final year project: HDBSCAN-Based Analysis of Stunting Prevalence (graded A).",
-      "3rd Place in the National Scientific Writing Competition (KTI) at the RXPO FARMASI 2024",
-      "Teaching assistant for the Big Data Visualization course (30 students).",
+      "1st place, Turnamen Sains Data Nasional (TSDN) 2024.",
+      "Executive Lead of Himpunan Mahasiswa Rekayasa Perangkat Lunak (2023).",
     ],
-    coursework: [
-      "Data Mining",
-      "Web Development",
-      "UI/UX Design",
-      "Database",
-      "Machine Learning",
-      "Artificial Intelligence.",
-    ],
+    coursework: ["Data Structures and Algorithm", "Machine Learning", "Artificial Intelligence"],
   },
   {
-    id: "its-exchange",
-    institution: "Institut Teknologi Sepuluh Nopember",
-    degree: "S.Kom",
-    field: "Computer Engineering",
-    location: "Surabaya, Indonesia",
-    period: "Aug 2022 – Dec 2022",
-    graduationYear: "2022",
-    summary:
-      "Pertukaran Mahasiswa Merdeka Batch 2 – MBKM’s Program",
-    highlights: [
-      "Exchange Program at the Department of Computer Engineering.",
-    ],
-    coursework: [
-      "Database",
-      "Data Structure",
-      "Web Development",
-      "Information Systems",
-      "Social Culture",
-    ],
+    id: "western-exchange",
+    institution: "University of Western Ontario",
+    degree: "Student Exchange",
+    field: "Social Sciences",
+    location: "London, Canada",
+    period: "Sep 2023 – Dec 2023",
+    graduationYear: "2023",
+    summary: "One-semester student exchange in the Faculty of Social Sciences.",
+    highlights: [],
+    coursework: ["Computer Science", "Earth Science", "History", "Sociology"],
   },
 ];
