@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import { education } from "@/data/education";
-import { EducationCard } from "@/components/education/EducationCard";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { Timeline } from "@/components/ui/Timeline";
+import { EducationEntry } from "@/components/education/EducationCard";
+import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Education",
-  description: "Academic background, degrees and achievements.",
+  description: "Software Engineering at Universitas Pendidikan Indonesia and a student exchange at the University of Western Ontario.",
   alternates: { canonical: "/education" },
 };
 
 export default function EducationPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Education"
-        title="Academic background"
-        description="The studies that shaped how I think about software, data and systems."
+      <PageIntro
+        title="Education"
+        description="A degree in Software Engineering, and a semester abroad that widened it."
       />
-      <div className="container">
-        <Timeline items={education.map((item) => ({ key: item.id, node: <EducationCard item={item} /> }))} />
+      <div className="container pb-24">
+        {education.map((item) => (
+          <EducationEntry key={item.id} item={item} />
+        ))}
       </div>
     </>
   );

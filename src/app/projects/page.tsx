@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
 import { projects } from "@/data/projects";
-import { ProjectGrid } from "@/components/projects/ProjectGrid";
-import { PageHeader } from "@/components/ui/PageHeader";
+import { ProjectIndex } from "@/components/projects/ProjectIndex";
+import { PageIntro } from "@/components/ui/PageIntro";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected software, data engineering, analytics and digitalization projects.",
+  description: "Projects in AI engineering, machine learning and data engineering, each with a full case study.",
   alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Projects"
-        title="Things I've built"
-        description="Select a project to read the full story — the problem, my approach and the results."
+      <PageIntro
+        title="Projects"
+        description="Each project opens into a case study: what it set out to do, how it works, my part in it and what it achieved."
       />
-      <div className="container">
-        <ProjectGrid projects={projects} filterable />
+      <div className="container pb-24">
+        <ProjectIndex projects={projects} />
       </div>
     </>
   );

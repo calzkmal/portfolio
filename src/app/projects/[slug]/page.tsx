@@ -1,24 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  CheckCircle2,
-  ExternalLink,
-  Layers,
-  Target,
-  User,
-  Users,
-  Clock,
-} from "lucide-react";
 import { getAdjacentProjects, getProject, projects } from "@/data/projects";
+import { projectField } from "@/data/scenes";
 import { siteConfig } from "@/data/site";
-import { Badge, BadgeList } from "@/components/ui/Badge";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { GithubIcon } from "@/components/ui/icons";
-import { Reveal } from "@/components/ui/Reveal";
+import { Button } from "@/components/ui/Button";
+import { Headline } from "@/components/ui/Headline";
+import { MetaList } from "@/components/ui/Meta";
+import { Plate } from "@/components/ui/Plate";
+import { TagList } from "@/components/ui/Tag";
 import { ProjectGallery } from "@/components/projects/ProjectGallery";
 
 interface PageProps {
@@ -41,39 +31,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: project.title,
     description: project.summary,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: {
-      type: "article",
-      url,
-      title: project.title,
-      description: project.summary,
-    },
+    openGraph: { type: "article", url, title: project.title, description: project.summary },
     twitter: { title: project.title, description: project.summary },
   };
 }
 
-function Section({
-  id,
-  icon: Icon,
-  title,
-  children,
-}: {
-  id: string;
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  children: React.ReactNode;
-}) {
+/** Article section. Rendered only when it has content. */
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <Reveal>
-      <section aria-labelledby={id} className="scroll-mt-24">
-        <h2 id={id} className="flex items-center gap-3 font-display text-2xl font-medium tracking-tight">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent-strong">
-            <Icon className="h-[18px] w-[18px]" />
-          </span>
-          {title}
-        </h2>
-        <div className="mt-5">{children}</div>
-      </section>
-    </Reveal>
+    <section aria-labelledby={id} className="scroll-mt-24 border-t border-rule pt-8">
+      <h2 id={id} className="font-serif text-h2 text-ink">
+        {title}
+      </h2>
+      <div className="mt-6 max-w-measure space-y-4 text-ink-2">{children}</div>
+    </section>
   );
 }
 
@@ -81,8 +52,8 @@ function Bullets({ items }: { items: string[] }) {
   return (
     <ul className="space-y-3">
       {items.map((item) => (
-        <li key={item} className="flex gap-3 leading-relaxed text-ink-soft">
-          <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+        <li key={item} className="relative pl-5">
+          <span aria-hidden="true" className="absolute left-0 top-[0.7em] h-1 w-1 rounded-full bg-ink-3" />
           {item}
         </li>
       ))}
@@ -96,215 +67,148 @@ export default async function ProjectPage({ params }: PageProps) {
   if (!project) notFound();
 
   const adjacent = getAdjacentProjects(project.slug);
-
-  const facts = [
-    { icon: User, label: "Role", value: project.role },
-    { icon: Calendar, label: "Year", value: project.year },
-    { icon: Clock, label: "Duration", value: project.duration },
-    { icon: Users, label: "Team", value: project.team },
-  ].filter((f): f is typeof f & { value: string } => Boolean(f.value));
+  const field = projectField[project.slug];
 
   return (
     <article>
-      <div className="container pt-8 sm:pt-12">
-        <Link
-          href="/projects"
-          className="group inline-flex items-center gap-2 rounded-full text-sm text-ink-muted transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" />
-          Back to Projects
+      <header className="container pt-10 sm:pt-16">
+        <Link href="/projects" className="link-draw inline-flex min-h-11 items-center text-small text-ink-2 hover:text-ink">
+          All projects
         </Link>
 
-        <header className="mt-8 max-w-3xl animate-fade-up">
-          <div className="flex items-center gap-3">
-            <Badge variant="accent">{project.category}</Badge>
-            <span className="text-sm text-ink-muted">{project.year}</span>
-          </div>
-          <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-            {project.title}
-          </h1>
-          <p className="mt-5 text-lg leading-relaxed text-ink-soft">{project.overview}</p>
-
-          {(project.github || project.demo) && (
-            <div className="mt-7 flex flex-wrap gap-3">
-              {project.demo && (
-                <ButtonLink href={project.demo}>
-                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  Live Demo
-                </ButtonLink>
-              )}
-              {project.github && (
-                <ButtonLink href={project.github} variant="secondary">
-                  <GithubIcon className="h-4 w-4" />
-                  GitHub Repository
-                </ButtonLink>
-              )}
-            </div>
-          )}
-        </header>
-      </div>
-
-      <div className="container mt-10 sm:mt-14">
-        <ProjectGallery images={project.gallery} />
-      </div>
-
-      <div className="container mt-16 grid gap-12 lg:grid-cols-[1fr_300px] lg:gap-16">
-        <div className="min-w-0 space-y-14">
-          {project.problem.length > 0 && (
-          <Section id="problem" icon={Target} title="The problem">
-            <div className="space-y-4 leading-relaxed text-ink-soft">
-              {project.problem.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          </Section>
-          )}
-
-          {project.objectives.length > 0 && (
-          <Section id="objectives" icon={CheckCircle2} title="Objectives">
-            <Bullets items={project.objectives} />
-          </Section>
-          )}
-
-          <Section id="solution" icon={Layers} title="Solution & implementation">
-            <div className="space-y-4 leading-relaxed text-ink-soft">
-              {project.solution.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          </Section>
-
-          {project.features.length > 0 && (
-          <Reveal>
-            <section aria-labelledby="features" className="scroll-mt-24">
-              <h2 id="features" className="font-display text-2xl font-medium tracking-tight">
-                Key features
-              </h2>
-              <ul className="mt-5 grid gap-4 sm:grid-cols-2">
-                {project.features.map((f) => (
-                  <li key={f.title} className="card p-5">
-                    <h3 className="font-medium">{f.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{f.description}</p>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </Reveal>
-          )}
-
-          <Section id="contributions" icon={User} title="My role & contributions">
-            <p className="mb-4 text-ink-soft">
-              <strong className="font-medium text-ink">{project.role}</strong>
+        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-6">
+          <div className="lg:col-span-8">
+            <p className="font-mono text-meta text-ink-3">
+              {project.category}, {project.year}
             </p>
-            <Bullets items={project.contributions} />
-          </Section>
+            <Headline as="h1" size="h1" intro className="mt-4">
+              {project.title}
+            </Headline>
+            <p className="mt-8 max-w-lead text-lead text-ink-2">{project.overview}</p>
 
-          {(project.outcomes.length > 0 || project.outcomeSummary) && (
-          <Reveal>
-            <section aria-labelledby="outcomes" className="scroll-mt-24">
-              <h2 id="outcomes" className="font-display text-2xl font-medium tracking-tight">
-                Outcomes &amp; impact
-              </h2>
-              {project.outcomes.length > 0 && (
-              <ul className="mt-5 grid gap-4 sm:grid-cols-3">
-                {project.outcomes.map((o) => (
-                  <li key={o.label} className="rounded-2xl bg-accent-soft p-5">
-                    <p className="font-display text-3xl font-medium tracking-tight text-accent-strong">
-                      {o.value}
-                    </p>
-                    <p className="mt-1 text-sm text-ink-soft">{o.label}</p>
-                  </li>
-                ))}
-              </ul>
-              )}
-              {project.outcomeSummary && (
-                <p className="mt-5 leading-relaxed text-ink-soft">{project.outcomeSummary}</p>
-              )}
-            </section>
-          </Reveal>
-          )}
-        </div>
-
-        <aside aria-label="Project facts" className="lg:sticky lg:top-24 lg:self-start">
-          <div className="card space-y-6 p-6">
-            <dl className="space-y-5">
-              {facts.map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex gap-3">
-                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                  <div>
-                    <dt className="text-xs uppercase tracking-wider text-ink-muted">{label}</dt>
-                    <dd className="mt-0.5 text-sm text-ink">{value}</dd>
-                  </div>
-                </div>
-              ))}
-            </dl>
-            <div className="border-t border-line pt-5">
-              <h2 className="text-xs uppercase tracking-wider text-ink-muted">Technologies used</h2>
-              <BadgeList items={project.technologies} className="mt-3" />
-            </div>
             {(project.github || project.demo) && (
-              <div className="space-y-2 border-t border-line pt-5 text-sm">
-                {project.demo && (
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-medium text-accent-strong hover:underline"
-                  >
-                    <ExternalLink className="h-4 w-4" aria-hidden="true" /> Live demo
-                  </a>
-                )}
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                {project.demo && <Button href={project.demo}>Open the live demo</Button>}
                 {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-medium text-accent-strong hover:underline"
-                  >
-                    <GithubIcon className="h-4 w-4" /> Source code
-                  </a>
+                  <Button href={project.github} variant="text">
+                    View the code on GitHub
+                  </Button>
                 )}
               </div>
             )}
           </div>
+        </div>
+      </header>
+
+      <div className="container mt-14 sm:mt-20">
+        {project.gallery.length > 0 ? (
+          <ProjectGallery images={project.gallery} />
+        ) : (
+          field && (
+            <Plate
+              src={`/field/${field.state}.svg`}
+              alt=""
+              caption={field.caption}
+              illustrative
+              ratio="aspect-[16/9]"
+              priority
+              className="[&>div]:bg-sage/25"
+            />
+          )
+        )}
+      </div>
+
+      <div className="container mt-16 grid gap-14 pb-24 lg:mt-24 lg:grid-cols-12 lg:gap-6">
+        <div className="min-w-0 space-y-16 lg:col-span-7">
+          {project.problem.length > 0 && (
+            <Section id="problem" title="The problem">
+              {project.problem.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </Section>
+          )}
+
+          {project.objectives.length > 0 && (
+            <Section id="objectives" title="What it set out to do">
+              <Bullets items={project.objectives} />
+            </Section>
+          )}
+
+          {project.solution.length > 0 && (
+            <Section id="solution" title="How it works">
+              {project.solution.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </Section>
+          )}
+
+          {project.features.length > 0 && (
+            <Section id="features" title="Key parts">
+              <dl className="space-y-5">
+                {project.features.map((f) => (
+                  <div key={f.title}>
+                    <dt className="font-semibold text-ink">{f.title}</dt>
+                    <dd className="mt-1">{f.description}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Section>
+          )}
+
+          {project.contributions.length > 0 && (
+            <Section id="contributions" title="My part">
+              <p className="font-medium text-ink">{project.role}</p>
+              <Bullets items={project.contributions} />
+            </Section>
+          )}
+
+          {(project.outcomes.length > 0 || project.outcomeSummary) && (
+            <Section id="outcomes" title="Outcome">
+              {project.outcomes.length > 0 && (
+                <dl className="grid gap-6 sm:grid-cols-2">
+                  {project.outcomes.map((o) => (
+                    <div key={o.label} className="flex flex-col-reverse">
+                      <dt className="mt-1 text-small text-ink-2">{o.label}</dt>
+                      <dd className="font-serif text-h2 text-ink">{o.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              {project.outcomeSummary && <p>{project.outcomeSummary}</p>}
+            </Section>
+          )}
+        </div>
+
+        <aside aria-label="Project facts" className="lg:col-span-4 lg:col-start-9">
+          <div className="space-y-8 lg:sticky lg:top-24">
+            <MetaList
+              items={[
+                { label: "Role", value: project.role },
+                { label: "Period", value: project.duration },
+                { label: "Year", value: project.year },
+                project.team ? { label: "Team", value: project.team } : null,
+              ]}
+            />
+            <div className="border-t border-rule pt-6">
+              <h2 className="text-meta text-ink-3">Stack</h2>
+              <TagList items={project.technologies} className="mt-3" />
+            </div>
+          </div>
         </aside>
       </div>
 
-      <nav aria-label="More projects" className="container mt-20">
-        <div className="flex items-center justify-between border-t border-line pt-8">
-          <h2 className="font-display text-2xl font-medium tracking-tight">More projects</h2>
-          <ButtonLink href="/projects" variant="secondary">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Back to Projects
-          </ButtonLink>
-        </div>
-        {adjacent && (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <Link
-              href={`/projects/${adjacent.previous.slug}`}
-              className="card group flex flex-col gap-1 p-6 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-lift"
-            >
-              <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-ink-muted">
-                <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true" />
-                Previous project
-              </span>
-              <span className="font-display text-xl font-medium">{adjacent.previous.title}</span>
-              <span className="text-sm text-ink-muted">{adjacent.previous.category}</span>
-            </Link>
-            <Link
-              href={`/projects/${adjacent.next.slug}`}
-              className="card group flex flex-col gap-1 p-6 text-left transition-all duration-500 hover:-translate-y-0.5 hover:shadow-lift sm:items-end sm:text-right"
-            >
-              <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-ink-muted">
-                Next project
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-              </span>
-              <span className="font-display text-xl font-medium">{adjacent.next.title}</span>
-              <span className="text-sm text-ink-muted">{adjacent.next.category}</span>
-            </Link>
-          </div>
-        )}
-      </nav>
+      {adjacent && (
+        <nav aria-label="More projects" className="container grid border-t border-rule sm:grid-cols-2">
+          <Link href={`/projects/${adjacent.previous.slug}`} className="group py-10 sm:pr-6">
+            <span className="text-meta text-ink-3">Previous project</span>
+            <span className="link-draw mt-2 block w-fit font-serif text-h3 text-ink group-hover:[background-size:100%_1px]">{adjacent.previous.title}</span>
+          </Link>
+          <Link href={`/projects/${adjacent.next.slug}`} className="group border-t border-rule py-10 sm:border-l sm:border-t-0 sm:pl-6 sm:text-right">
+            <span className="text-meta text-ink-3">Next project</span>
+            <span className="link-draw mt-2 block w-fit font-serif text-h3 text-ink group-hover:[background-size:100%_1px] sm:ml-auto">{adjacent.next.title}</span>
+          </Link>
+        </nav>
+      )}
     </article>
   );
 }
