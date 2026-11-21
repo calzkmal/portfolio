@@ -571,6 +571,7 @@ html.lenis {
   }
   .home-polaroid {
     width: min(280px, 100%);
+    justify-self: center;
   }
   .home-hero-intro {
     width: auto;
