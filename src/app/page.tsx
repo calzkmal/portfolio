@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
-import { Mona_Sans, Work_Sans } from "next/font/google";
 import "@/components/home/home.css";
 import { SmoothScroll } from "@/components/home/SmoothScroll";
 import { Rail } from "@/components/home/Rail";
@@ -8,26 +7,17 @@ import { Clock } from "@/components/home/Clock";
 import { Entry, SectionHead } from "@/components/home/Entry";
 import { Parallax } from "@/components/home/Parallax";
 import { ScrollReveal } from "@/components/home/ScrollReveal";
-import { Wave } from "@/components/home/Wave";
-import { ProjectArt, artBackground } from "@/components/home/ProjectArt";
+import { StickyEntries } from "@/components/home/StickyEntries";
+import { Statement } from "@/components/home/Statement";
+import { SiteFooter } from "@/components/home/SiteFooter";
+import { ReturnPoint } from "@/components/home/ReturnPoint";
+import { bodyFont, displayFont } from "@/components/home/fonts";
 import { profile } from "@/data/profile";
 import { experience } from "@/data/experience";
-import { projects } from "@/data/projects";
 import { education } from "@/data/education";
 import { achievements } from "@/data/achievements";
 import { siteConfig } from "@/data/site";
-import { displayName, focusAreas } from "@/data/home";
-
-const body = Work_Sans({
-  subsets: ["latin"],
-  variable: "--home-body",
-  display: "swap",
-});
-const display = Mona_Sans({
-  subsets: ["latin"],
-  variable: "--home-display",
-  display: "swap",
-});
+import { displayName, focusAreas, entryProjects } from "@/data/home";
 
 export const metadata: Metadata = {
   title: { absolute: siteConfig.siteName },
@@ -39,7 +29,6 @@ export const viewport: Viewport = { themeColor: "#ffffff" };
 const sections = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
-  { id: "works", label: "Works" },
   { id: "education", label: "Education" },
   { id: "recognition", label: "Recognition" },
   { id: "contact", label: "Contact" },
@@ -76,7 +65,6 @@ export default function HomePage() {
     sameAs: web.map((s) => s.href),
   };
   const [firstName, lastName] = displayName.split(" ");
-  const works = [...projects].sort((a, b) => Number(b.year) - Number(a.year));
 
   return (
     <SmoothScroll>
@@ -84,7 +72,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className={`home ${body.variable} ${display.variable}`}>
+      <div className={`home ${bodyFont.variable} ${displayFont.variable}`}>
         <Rail items={sections} />
         <Clock
           city={city(profile.location)}
@@ -116,8 +104,8 @@ export default function HomePage() {
                 </figure>
               </div>
               <p className="home-bio">
-                My name is {displayName}. {profile.tagline} I&apos;m currently
-                building iOS apps at Apple Developer Academy @ UC Jakarta.
+                My name is {displayName}. I&apos;m currently building iOS apps
+                at Apple Developer Academy @ UC Jakarta.
               </p>
               <ul className="home-chips">
                 {focusAreas.map((f) => (
@@ -127,25 +115,26 @@ export default function HomePage() {
             </div>
           </section>
 
+          <Statement text={profile.tagline} />
+
           {/* Experience */}
           <section id="experience">
-            <div className="home-col">
-              <SectionHead
-                title="Experience"
-                subtitle="Selected Practice & Results"
-              />
+            <StickyEntries
+              heading={<SectionHead title="Experience" subtitle="Selected Practice & Results" />}
+              count={experience.length}
+            >
 
-              {experience.map((job, i) => {
+              {experience.map((job) => {
                 const result = job.result ?? job.achievements.join(" ");
                 return (
                   <Entry
                     key={job.id}
-                    stamp={job.stamp}
-                    reverse={i % 2 === 1}
+                    logoSrc={job.logoSrc}
                     title={`${job.role} — ${job.company}`}
                     meta={`${job.period} · ${city(job.location)}`}
                     summary={job.summary}
                     tags={job.technologies}
+                    projectSlugs={entryProjects[job.id]}
                     points={
                       job.highlights ??
                       job.responsibilities.map((text) => ({ text }))
@@ -158,64 +147,23 @@ export default function HomePage() {
                   />
                 );
               })}
-            </div>
+            </StickyEntries>
           </section>
 
-          {/* Works */}
-          <section id="works">
-            <div className="home-col">
-              <SectionHead title="Works" subtitle="Selected Projects" />
-              <div className="home-works">
-                {works.map((p) => (
-                  <article
-                    className="home-work"
-                    key={p.slug}
-                    data-reveal="card"
-                  >
-                    <div
-                      className="home-visual"
-                      style={{ background: artBackground[p.slug] ?? "#f1efec" }}
-                    >
-                      <Parallax>
-                        <ProjectArt slug={p.slug} title={p.title} />
-                      </Parallax>
-                    </div>
-                    <div className="home-work-info">
-                      <h3>{p.title.split(" — ")[0]}</h3>
-                      <p className="home-line">{p.category}</p>
-                      <p className="home-line">@{p.year}</p>
-                      <p className="home-desc">{p.summary}</p>
-                      <p className="home-line">
-                        {p.role} · {p.technologies.slice(0, 4).join(", ")}
-                      </p>
-                      {p.outcomes[0] && (
-                        <p className="home-outcome">
-                          {p.outcomes[0].value} — {p.outcomes[0].label}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Education: same layout as Experience */}
           <section id="education">
-            <div className="home-col">
-              <SectionHead
-                title="Education"
-                subtitle="Degrees & Exchange"
-              />
+            <StickyEntries
+              heading={<SectionHead title="Education" subtitle="Degrees & Exchange" />}
+              count={education.length}
+            >
 
-              {education.map((ed, i) => (
+              {education.map((ed) => (
                 <Entry
                   key={ed.id}
-                  stamp={ed.stamp}
-                  reverse={i % 2 === 1}
+                  logoSrc={ed.logoSrc}
                   title={`${ed.degree}, ${ed.field} — ${ed.institution}`}
                   meta={`${ed.period} · ${city(ed.location)}`}
                   summary={ed.summary}
+                  projectSlugs={entryProjects[ed.id]}
                   // Coursework shows as tags, or as the only point when there are no highlights.
                   tags={ed.highlights.length ? ed.coursework : undefined}
                   points={
@@ -236,7 +184,7 @@ export default function HomePage() {
                   }
                 />
               ))}
-            </div>
+            </StickyEntries>
           </section>
 
           {/* Recognition */}
@@ -259,44 +207,12 @@ export default function HomePage() {
             </div>
           </section>
         </main>
+        <div id="contact" aria-hidden="true" />
 
-        {/* Contact */}
-        <footer className="home-footer" id="contact">
-          <div className="home-grid-lines" aria-hidden="true">
-            <span />
-          </div>
-          <div className="home-foot-body">
-            <h2 className="home-bigname home-name" data-reveal="head">
-              <span>{firstName}</span>
-              <span>{lastName}</span>
-            </h2>
-            <div className="home-reach" data-reveal data-reveal-delay="0.15">
-              <div className="home-socials">
-                {mail && <a href={mail.href}>Email</a>}
-                {web.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {s.label}
-                  </a>
-                ))}
-                <a
-                  href={profile.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Résumé
-                </a>
-              </div>
-            </div>
-          </div>
-          <Wave />
-        </footer>
+        <SiteFooter />
       </div>
       <ScrollReveal />
+      <ReturnPoint />
     </SmoothScroll>
   );
 }

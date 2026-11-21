@@ -31,7 +31,7 @@ export function Clock({ city, country, timeZone }: { city: string; country: stri
 
   return (
     <div className="home-clock">
-      <span>{value?.time ?? "--:-- --"}</span> in <span>{city}</span>, <span>{country}</span>
+      <span className="home-clock-time">{value?.time ?? "--:-- --"}</span> in <span>{city}</span>, <span>{country}</span>
     </div>
   );
 }

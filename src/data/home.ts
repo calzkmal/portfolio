@@ -14,3 +14,9 @@ export const focusAreas = [
   "Game Development",
   "Product Research",
 ];
+
+/** Project detail links grouped by the entry that gives them context on the home page. */
+export const entryProjects: Partial<Record<string, string[]>> = {
+  "apple-developer-academy": ["seagis"],
+  upi: ["emodu", "hiroop"],
+};

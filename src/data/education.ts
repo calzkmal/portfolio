@@ -19,7 +19,7 @@ export const education: Education[] = [
       "Executive Lead of Himpunan Mahasiswa Rekayasa Perangkat Lunak (2023).",
     ],
     coursework: ["Data Structures and Algorithm", "Machine Learning", "Artificial Intelligence"],
-    stamp: { initials: "UPI", ring: "UNIVERSITAS PENDIDIKAN INDONESIA · BANDUNG · " },
+    logoSrc: "/images/organizations/upi.svg",
   },
   {
     id: "western-exchange",
@@ -32,6 +32,6 @@ export const education: Education[] = [
     summary: "One-semester student exchange in the Faculty of Social Sciences.",
     highlights: [],
     coursework: ["Computer Science", "Earth Science", "History", "Sociology"],
-    stamp: { initials: "UWO", ring: "UNIVERSITY OF WESTERN ONTARIO · LONDON · CANADA · " },
+    logoSrc: "/images/organizations/western-university.svg",
   },
 ];

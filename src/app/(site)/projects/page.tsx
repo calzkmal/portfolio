@@ -1,23 +1,45 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { projects } from "@/data/projects";
-import { ProjectIndex } from "@/components/projects/ProjectIndex";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { SectionHead } from "@/components/home/Entry";
+import { ProjectArt, artBackground } from "@/components/home/ProjectArt";
+import { ScrollReveal } from "@/components/home/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Works",
   alternates: { canonical: "/projects" },
 };
 
-export default function ProjectsPage() {
+/** Every project, newest first, each opening its case study. */
+export default function WorksPage() {
+  const works = [...projects].sort((a, b) => Number(b.year) - Number(a.year));
   return (
-    <>
-      <PageIntro
-        title="Projects"
-        description="Each project opens into a case study: what it set out to do, how it works, my part in it and what it achieved."
-      />
-      <div className="container pb-24">
-        <ProjectIndex projects={projects} />
+    <section className="works-index">
+      <div className="home-col">
+        <SectionHead title="Works" subtitle="Selected Projects" />
+        <ul className="works-list">
+          {works.map((p, n) => (
+            <li key={p.slug} data-reveal data-reveal-delay={(0.05 * n).toFixed(2)}>
+              <Link href={`/projects/${p.slug}`}>
+                <span className="works-art" style={{ background: artBackground[p.slug] ?? "#f1efec" }} aria-hidden="true">
+                  <ProjectArt slug={p.slug} title={p.title} />
+                </span>
+                <span className="works-copy">
+                  <strong>{p.title.split(" — ")[0]}</strong>
+                  <span className="meta">
+                    {p.category} · {p.year}
+                  </span>
+                  <span className="sum">{p.summary}</span>
+                </span>
+                <span className="works-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+      <ScrollReveal />
+    </section>
   );
 }

@@ -1,5 +1,5 @@
 /**
- * Site-wide configuration: navigation and SEO defaults.
+ * Site-wide configuration: pages for the sitemap and SEO defaults.
  * Personal details live in `profile.ts`.
  */
 
@@ -37,8 +37,5 @@ export interface NavItem {
 
 export const navigation: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "Education", href: "/education" },
-  { label: "Experience", href: "/experience" },
-  { label: "Projects", href: "/projects" },
-  { label: "Achievements", href: "/achievements" },
+  { label: "Works", href: "/projects" },
 ];

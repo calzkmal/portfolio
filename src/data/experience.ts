@@ -21,7 +21,7 @@ export const experience: Experience[] = [
       "Won 3rd place at the Academy-level Very Disco Local Game Jam with StackHouse.",
     ],
     technologies: ["Swift", "iOS", "TestFlight"],
-    stamp: { initials: "AD", ring: "APPLE DEVELOPER ACADEMY · JAKARTA · " },
+    logoSrc: "/images/organizations/apple-developer-academy.svg",
     highlights: [
       { title: "End-to-end ownership.", text: "Led development across 4 challenges, turning ideas into working iOS applications." },
       { title: "Hardware-aware interaction.", text: "Built apps that use motion sensing, device connectivity and haptic feedback." },
@@ -45,7 +45,7 @@ export const experience: Experience[] = [
       "Reduced web scraping costs by ~50% through relevance filtering and deduplication.",
     ],
     technologies: ["Python", "n8n", "LLMs", "AI Agents", "Web Scraping", "REST APIs"],
-    stamp: { initials: "SS", ring: "PT SENJA SOLUSI · BANDUNG · AUTOMATION · " },
+    logoSrc: "/images/organizations/senja-solusi.svg",
     highlights: [
       { title: "Agent architecture.", text: "Designed a financial content platform running 4 production workflows and 20+ AI agents." },
       { title: "Reusable building blocks.", text: "Built 18+ reusable prompt modules and 10+ quality-assurance reviewers to keep the workflows scalable." },
@@ -71,7 +71,7 @@ export const experience: Experience[] = [
       "Delivered 5+ dashboards to support business decisions.",
     ],
     technologies: ["Python", "REST APIs", "Data Dashboards"],
-    stamp: { initials: "KN", ring: "KALBE NUTRITIONALS · BUSINESS INSIGHT · " },
+    logoSrc: "/images/organizations/kalbe-nutritionals.svg",
     highlights: [
       { title: "Data quality.", text: "Kept 10+ macroeconomic data categories consistent and accurate." },
       { title: "Automated collection.", text: "Moved data gathering to automated, API-based collection." },
