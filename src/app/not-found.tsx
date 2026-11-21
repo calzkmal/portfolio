@@ -1,32 +1,31 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Button } from "@/components/ui/Button";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 
 export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
       <Header />
-      <main id="main" className="flex-1">
+      <main id="main" className="relative flex-1">
         <section className="container flex min-h-[60vh] flex-col items-start justify-center py-24">
-          <p className="eyebrow">404</p>
-          <h1 className="mt-3 font-display text-4xl font-medium tracking-tight sm:text-5xl">
-            This page doesn&apos;t exist.
-          </h1>
-          <p className="mt-4 max-w-md text-ink-soft">
-            The link may be broken or the page may have moved. Head back to the homepage or browse my projects.
+          <h1 className="font-serif text-h1 text-ink">This page doesn&apos;t exist.</h1>
+          <p className="mt-6 max-w-lead text-lead text-ink-2">
+            The link may be broken, or the page has moved. Go back to the homepage or browse the projects.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/">Back to home</ButtonLink>
-            <ButtonLink href="/projects" variant="secondary">
-              View projects
-            </ButtonLink>
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Button href="/">Go to the homepage</Button>
+            <Button href="/projects" variant="text">
+              Browse projects
+            </Button>
           </div>
         </section>
       </main>
       <Footer />
-    </div>
+      <MotionProvider />
+    </>
   );
 }

@@ -1,22 +1,21 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 
 /**
  * Layout for the inner pages (Education, Experience, Projects, Achievements).
- * The home page has its own single-page layout and doesn't use this one.
+ * The home page has its own single-page layout and its own Lenis instance, so
+ * MotionProvider (the inner pages' Lenis + GSAP setup) only runs here.
  */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <noscript>
-        {/* Without JS the scroll-reveal observer never runs, so show everything. */}
-        <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
-      </noscript>
+    <>
       <Header />
-      <main id="main" className="flex-1">
+      <main id="main" className="relative flex-1">
         {children}
       </main>
       <Footer />
-    </div>
+      <MotionProvider />
+    </>
   );
 }

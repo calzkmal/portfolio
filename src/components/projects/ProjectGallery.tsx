@@ -13,7 +13,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
 
   return (
     <figure aria-label="Project screenshots">
-      <div className="card relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-plate bg-sage/30">
         <Image
           key={current.src}
           src={current.src}
@@ -22,16 +22,15 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
           priority={index === 0}
           sizes="(min-width: 1080px) 1016px, 100vw"
           className={cn(
-            "animate-fade-up",
-            current.fit === "contain" ? "object-contain p-2 sm:p-4" : "object-cover",
+                        current.fit === "contain" ? "object-contain p-2 sm:p-4" : "object-cover",
           )}
         />
       </div>
 
       <div className="mt-4 flex items-start justify-between gap-4">
-        <figcaption className="min-h-[1.5rem] text-sm text-ink-soft">
+        <figcaption className="min-h-[1.5rem] font-mono text-meta text-ink-2">
           {current.caption ?? current.alt}
-          <span className="ml-2 text-ink-muted">
+          <span className="ml-2 text-ink-3">
             {index + 1} / {images.length}
           </span>
         </figcaption>
@@ -39,7 +38,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
           href={current.src}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 text-sm font-medium text-accent-strong hover:underline"
+          className="link-draw shrink-0 text-small font-medium"
         >
           Open full size
         </a>
@@ -55,9 +54,9 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
                 aria-label={`Show screenshot ${i + 1}: ${image.caption ?? image.alt}`}
                 aria-pressed={i === index}
                 className={cn(
-                  "relative block aspect-[16/10] w-full overflow-hidden rounded-xl border-2 transition-all duration-300",
+                  "relative block aspect-[16/10] w-full overflow-hidden rounded-plate border-2 transition-[border-color,opacity] duration-quick",
                   i === index
-                    ? "border-accent shadow-card"
+                    ? "border-ink"
                     : "border-transparent opacity-60 hover:opacity-100",
                 )}
               >
@@ -66,7 +65,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
                   alt=""
                   fill
                   sizes="(min-width: 1080px) 330px, 33vw"
-                  className={image.fit === "contain" ? "object-contain bg-surface p-1" : "object-cover"}
+                  className={image.fit === "contain" ? "object-contain bg-paper p-1" : "object-cover"}
                 />
               </button>
             </li>

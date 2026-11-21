@@ -40,61 +40,55 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b transition-all duration-300",
-        scrolled || open
-          ? "border-line bg-canvas/85 backdrop-blur-md"
-          : "border-transparent bg-canvas/0",
+        "sticky top-0 z-50 transition-[background-color,box-shadow] duration-quick ease-out",
+        scrolled || open ? "bg-paper/95 shadow-float" : "bg-transparent",
       )}
     >
-      <div className="container flex h-16 items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 rounded-full text-[15px] font-semibold tracking-tight"
-          aria-label={`${profile.name} — home`}
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent font-display text-[13px] font-semibold text-white">
-            {profile.initials}
-          </span>
-          <span className="hidden sm:inline">{profile.name}</span>
+      <div className="container flex h-16 items-center justify-between gap-6">
+        <Link href="/" className="text-small font-semibold tracking-tight" aria-label={`${profile.name}, home`}>
+          {profile.name}
         </Link>
 
         <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {navigation.map((item) => {
-              const active = isActive(pathname, item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "relative rounded-full px-3.5 py-2 text-sm transition-colors duration-200",
-                      active ? "text-ink" : "text-ink-muted hover:text-ink",
-                    )}
-                  >
-                    {item.label}
-                    <span
+          <ul className="flex items-center gap-7">
+            {navigation
+              .filter((item) => item.href !== "/")
+              .map((item) => {
+                const active = isActive(pathname, item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
                       className={cn(
-                        "absolute inset-x-3.5 -bottom-px h-px origin-left bg-accent transition-transform duration-300",
-                        active ? "scale-x-100" : "scale-x-0",
+                        "relative inline-flex min-h-11 items-center text-small transition-colors duration-instant",
+                        active ? "font-medium text-ink" : "text-ink-2 hover:text-ink",
                       )}
-                    />
-                  </Link>
-                </li>
-              );
-            })}
+                    >
+                      {item.label}
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "absolute inset-x-0 bottom-2 h-0.5 origin-left bg-signal-ink transition-transform duration-quick ease-out",
+                          active ? "scale-x-100" : "scale-x-0",
+                        )}
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
           </ul>
         </nav>
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface md:hidden"
+          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {open ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
         </button>
       </div>
 
@@ -102,31 +96,34 @@ export function Header() {
         id="mobile-menu"
         aria-label="Mobile"
         className={cn(
-          "grid overflow-hidden transition-[grid-template-rows] duration-300 md:hidden",
+          "grid overflow-hidden transition-[grid-template-rows] duration-settle ease-out md:hidden",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
         // Keeps hidden links out of the tab order while collapsed.
         {...(!open ? { inert: true } : {})}
       >
-        <ul className="container min-h-0 space-y-1 pb-4">
+        <div className="min-h-0 overflow-hidden">
+        <ul className="container pb-4">
           {navigation.map((item) => {
             const active = isActive(pathname, item.href);
             return (
-              <li key={item.href}>
+              <li key={item.href} className="border-t border-rule">
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "block rounded-xl px-4 py-3 text-base transition-colors",
-                    active ? "bg-accent-soft font-medium text-accent-strong" : "text-ink-soft hover:bg-ink/5",
+                    "flex min-h-12 items-center justify-between text-body",
+                    active ? "font-medium text-ink" : "text-ink-2",
                   )}
                 >
                   {item.label}
+                  {active && <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-signal" />}
                 </Link>
               </li>
             );
           })}
         </ul>
+        </div>
       </nav>
     </header>
   );

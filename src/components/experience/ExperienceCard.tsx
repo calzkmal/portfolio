@@ -1,60 +1,57 @@
-import { Briefcase, Calendar, CheckCircle2, MapPin } from "lucide-react";
 import type { Experience } from "@/types";
-import { Badge, BadgeList } from "@/components/ui/Badge";
+import { MetaList } from "@/components/ui/Meta";
+import { TagList } from "@/components/ui/Tag";
 
-export function ExperienceCard({ item }: { item: Experience }) {
+/** One role, set as an editorial entry: facts on the left, story on the right. */
+export function ExperienceEntry({ item, current }: { item: Experience; current: boolean }) {
   return (
-    <article className="card p-6 transition-shadow duration-500 hover:shadow-lift sm:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
+    <article id={item.id} aria-labelledby={`${item.id}-title`} className="grid scroll-mt-24 gap-8 border-t border-rule py-12 lg:grid-cols-12 lg:gap-6">
+      <div className="lg:col-span-4">
+        <p className="font-mono text-meta tabular-nums text-ink-3">
+          {item.period}
+          {current && <span className="ml-2 text-signal-ink">Now</span>}
+        </p>
+        <h2 id={`${item.id}-title`} className="mt-3 font-serif text-h2 text-ink">
+          {item.role}
+        </h2>
+        <p className="mt-2 font-medium text-ink">{item.company}</p>
+        <MetaList
+          className="mt-6"
+          items={[
+            { label: "Type", value: item.type },
+            { label: "Location", value: item.location },
+          ]}
+        />
+      </div>
+
+      <div className="space-y-8 lg:col-span-7 lg:col-start-6">
+        <p className="max-w-lead text-lead text-ink-2">{item.summary}</p>
+
         <div>
-          <h3 className="font-display text-2xl font-medium tracking-tight">{item.role}</h3>
-          <p className="mt-1 flex items-center gap-2 text-ink-soft">
-            <Briefcase className="h-4 w-4 text-accent" aria-hidden="true" />
-            {item.company}
-          </p>
+          <h3 className="text-meta text-ink-3">What I did</h3>
+          <ul className="mt-3 max-w-measure space-y-2.5 text-ink-2">
+            {item.responsibilities.map((r) => (
+              <li key={r} className="relative pl-5">
+                <span aria-hidden="true" className="absolute left-0 top-[0.7em] h-1 w-1 rounded-full bg-ink-3" />
+                {r}
+              </li>
+            ))}
+          </ul>
         </div>
-        <Badge variant="accent">{item.type}</Badge>
+
+        {item.achievements.length > 0 && (
+          <div className="border-l-2 border-ink pl-5">
+            <h3 className="text-meta text-ink-3">Results</h3>
+            <ul className="mt-3 max-w-measure space-y-2.5 text-ink">
+              {item.achievements.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <TagList items={item.technologies} />
       </div>
-
-      <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
-        <div className="flex items-center gap-1.5">
-          <dt className="sr-only">Period</dt>
-          <Calendar className="h-4 w-4" aria-hidden="true" />
-          <dd>{item.period}</dd>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <dt className="sr-only">Location</dt>
-          <MapPin className="h-4 w-4" aria-hidden="true" />
-          <dd>{item.location}</dd>
-        </div>
-      </dl>
-
-      <p className="mt-5 leading-relaxed text-ink-soft">{item.summary}</p>
-
-      <h4 className="mt-6 text-sm font-semibold">Key responsibilities</h4>
-      <ul className="mt-3 space-y-2.5">
-        {item.responsibilities.map((r) => (
-          <li key={r} className="flex gap-3 text-sm leading-relaxed text-ink-soft">
-            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-            {r}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-6 rounded-xl bg-accent-soft/70 p-4 sm:p-5">
-        <h4 className="text-sm font-semibold text-accent-strong">Highlights &amp; contributions</h4>
-        <ul className="mt-3 space-y-2.5">
-          {item.achievements.map((a) => (
-            <li key={a} className="flex gap-3 text-sm leading-relaxed text-ink">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-              {a}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <h4 className="mt-6 text-sm font-semibold">Technologies &amp; tools</h4>
-      <BadgeList items={item.technologies} variant="outline" className="mt-3" />
     </article>
   );
 }
