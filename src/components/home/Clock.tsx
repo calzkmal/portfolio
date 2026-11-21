@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 
 function now(timeZone: string) {
   const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-GB", {
+    new Intl.DateTimeFormat("en-US", {
       timeZone,
       day: "2-digit",
       month: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      hour12: false,
+      hour12: true,
     })
       .formatToParts(new Date())
       .map((p) => [p.type, p.value]),
   );
-  return { date: `${parts.day}.${parts.month}`, time: `${parts.hour}:${parts.minute}` };
+  return { date: `${parts.day}.${parts.month}`, time: `${parts.hour}:${parts.minute} ${String(parts.dayPeriod).toUpperCase()}` };
 }
 
-/** "Now is 21.11, 16:08 in Bandung" — local time where you are, not the visitor's. */
-export function Clock({ city, timeZone }: { city: string; timeZone: string }) {
+/** "Now is 21.11, 06:50 PM in Bandung" — local time. */
+export function Clock({ city, country, timeZone }: { city: string; country: string; timeZone: string }) {
   const [value, setValue] = useState<{ date: string; time: string } | null>(null);
 
   useEffect(() => {
@@ -30,9 +30,8 @@ export function Clock({ city, timeZone }: { city: string; timeZone: string }) {
   }, [timeZone]);
 
   return (
-    <div className="anri-clock">
-      Now is <span>{value?.date ?? "--.--"}</span>,<br />
-      <span>{value?.time ?? "--:--"}</span> in {city}
+    <div className="home-clock">
+      <span>{value?.time ?? "--:-- --"}</span> in <span>{city}</span>, <span>{country}</span>
     </div>
   );
 }

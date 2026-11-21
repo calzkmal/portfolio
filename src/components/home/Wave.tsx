@@ -44,7 +44,7 @@ export function Wave() {
   }, [reduced]);
 
   return (
-    <svg className="anri-wave" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
+    <svg className="home-wave" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
       <path ref={pathRef} d={STILL} />
     </svg>
   );

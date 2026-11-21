@@ -1,11 +1,10 @@
 "use client";
 
 import { ReactLenis } from "lenis/react";
-import "lenis/dist/lenis.css";
 
 /**
  * Page-wide Lenis smooth scroll (https://github.com/darkroomengineering/lenis).
- * Options follow the README's recommended setup; `anchors` makes the rail's #links glide.
+ * Options follow the README's recommended setup. The rail handles its own #links (Rail.tsx) with a slow eased glide.
  */
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +13,6 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       options={{
         autoRaf: true,
         autoToggle: true,
-        anchors: { offset: -24 },
         allowNestedScroll: true,
         stopInertiaOnNavigate: true,
         lerp: 0.085,

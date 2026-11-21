@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { profile } from "@/data/profile";

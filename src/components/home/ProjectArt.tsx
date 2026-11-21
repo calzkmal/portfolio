@@ -4,7 +4,7 @@
  * A project without its own art gets a plain title card.
  */
 
-const FONT = "var(--anri-body), system-ui, sans-serif";
+const FONT = "var(--home-body), system-ui, sans-serif";
 
 export const artBackground: Record<string, string> = {
   seagis: "#d7e3e6",

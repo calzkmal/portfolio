@@ -10,11 +10,4 @@ if (typeof window !== "undefined") {
   gsap.config({ nullTargetWarn: false });
 }
 
-/** Media conditions shared by every scene (see motion-spec §7). */
-export const MEDIA = {
-  desktop: "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-  compact: "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
-  reduced: "(prefers-reduced-motion: reduce)",
-} as const;
-
 export { gsap, ScrollTrigger, useGSAP };

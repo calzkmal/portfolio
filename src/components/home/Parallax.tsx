@@ -26,7 +26,7 @@ export function Parallax({ strength = 28, children }: { strength?: number; child
   }, [reduced, strength]);
 
   return (
-    <div ref={ref} className="anri-parallax" style={{ willChange: "transform" }}>
+    <div ref={ref} className="home-parallax" style={{ willChange: "transform" }}>
       {children}
     </div>
   );

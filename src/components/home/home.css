@@ -1,11 +1,11 @@
 /*
- * Home page ("Anri" layout): a fixed left rail (nav + scroll line with a moving dot),
- * one quiet reading column and a dark gridded footer. Everything is scoped under .anri
- * so the inner pages keep their own Tailwind styles.
+ * Home page: a fixed left rail nav, one centred reading column whose blocks reveal
+ * with the Lenis scroll (ScrollReveal.tsx), and a dark gridded footer. Everything is
+ * scoped under .home so the inner pages keep their own Tailwind styles.
  */
 
-.anri {
-  --paper: #fbfaf8;
+.home {
+  --paper: #ffffff;
   --ink: #1f1d1c;
   --muted: #8a8580;
   --faint: #a9a29b;
@@ -17,18 +17,17 @@
   --night-muted: #8f8a84;
   --rail: 168px;
   --col: 780px;
-  --edge: 76px;
 
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--anri-body), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--home-body), system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-body:has(.anri) {
-  background: #fbfaf8;
+body:has(.home) {
+  background: #ffffff;
 }
 
 /* Lenis drives the scroll; native smooth scrolling would fight it. */
@@ -36,22 +35,22 @@ html.lenis {
   scroll-behavior: auto;
 }
 
-.anri a {
+.home a {
   color: inherit;
   text-decoration: none;
 }
-.anri :focus-visible {
+.home :focus-visible {
   outline: 1.5px solid var(--accent);
   outline-offset: 3px;
   box-shadow: none;
 }
-.anri ::selection {
+.home ::selection {
   background: var(--accent);
   color: var(--paper);
 }
 
 /* ---------- Rail ---------- */
-.anri-rail {
+.home-rail {
   position: fixed;
   top: 0;
   left: 0;
@@ -61,210 +60,196 @@ html.lenis {
   z-index: 5;
   pointer-events: none;
 }
-.anri-rail nav {
+.home-rail nav {
   display: flex;
   flex-direction: column;
   gap: 2px;
   pointer-events: auto;
 }
-.anri-rail nav a {
+.home-rail nav a {
   font-size: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--muted);
-  transition: color 0.3s;
+  transition: color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.anri-rail nav a::before {
+.home-rail nav a::before {
   content: "";
   width: 0;
   height: 1px;
   background: var(--ink);
   transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.anri-rail nav a:hover,
-.anri-rail nav a[aria-current="true"] {
+.home-rail nav a:hover,
+.home-rail nav a[aria-current="true"] {
   color: var(--ink);
 }
-.anri-rail nav a[aria-current="true"]::before {
+.home-rail nav a[aria-current="true"]::before {
   width: 14px;
 }
-.anri-track {
-  position: absolute;
-  left: calc(max(28px, env(safe-area-inset-left, 0px)) + 14px);
-  top: 130px;
-  bottom: 40px;
-  width: 1px;
-  background: var(--line);
-}
-.anri-dot {
-  position: absolute;
-  left: -3.5px;
-  top: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  will-change: transform;
-}
 
-.anri-clock {
+.home-clock {
   position: fixed;
   top: calc(22px + env(safe-area-inset-top, 0px));
   right: max(28px, env(safe-area-inset-right, 0px));
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.45;
   z-index: 5;
   font-variant-numeric: tabular-nums;
 }
-.anri-clock span {
+.home-clock {
+  transition: color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.home-clock span {
   color: var(--accent);
 }
 
+/* Over the dark footer, the fixed rail and clock switch to light text. */
+.home-rail[data-on-dark] nav a {
+  color: var(--night-muted);
+}
+.home-rail[data-on-dark] nav a:hover,
+.home-rail[data-on-dark] nav a[aria-current="true"] {
+  color: var(--night-ink);
+}
+.home-rail[data-on-dark] nav a::before {
+  background: var(--night-ink);
+}
+.home:has(.home-rail[data-on-dark]) .home-clock {
+  color: var(--night-ink);
+}
+
 /* ---------- Column ---------- */
-.anri main {
+.home main {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.anri-col {
+.home-col {
   max-width: var(--col);
   margin-inline: auto;
 }
-.anri section {
+.home section {
   padding-block: 120px;
 }
 
 /* ---------- Hero ---------- */
-.anri .anri-hero {
-  padding-top: 96px;
-  padding-bottom: 80px;
-}
-.anri-hero .anri-col {
-  max-width: 520px;
+/* Two halves split by a hairline: the name sits bottom-right of the left half, the intro centred in the right. */
+.home .home-hero {
+  position: relative;
   display: grid;
-  gap: 26px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)))
+    calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  border-bottom: 1px solid var(--line);
 }
-.anri-polaroid {
-  width: min(280px, 100%);
+.home-hero-name {
+  border-right: 1px solid var(--line);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 48px;
+}
+/* The big two-line name, shared by the hero and the footer: right-aligned, a rule between the lines. */
+.home-bigname {
+  width: 100%;
+  margin: 0;
+  font-family: var(--home-display), system-ui, sans-serif;
+  font-size: clamp(44px, 6.4vw, 140px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.home-bigname span {
+  display: block;
+  padding: 0.04em 0.4em 0.16em;
+  text-align: right;
+}
+.home-bigname span + span {
+  border-top: 1px solid var(--bigname-rule, var(--line));
+  padding-right: 1.4em;
+}
+.home-hero-name h1 {
+  font-weight: 400;
+  color: var(--ink);
+}
+.home-hero-intro {
+  align-self: center;
+  justify-self: center;
+  width: min(464px, 100% - 48px);
+  display: grid;
+  gap: 22px;
+  padding-block: 96px 48px;
+}
+.home-polaroid {
+  /* Shrinks on short screens so the bio and every focus area stay on the first screen. */
+  width: min(280px, 100%, 32svh);
   background: #fff;
   border: 1px solid var(--line);
   padding: 12px 12px 14px;
   display: grid;
   gap: 12px;
 }
-.anri-polaroid figure {
+.home-polaroid figure {
   margin: 0;
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background: var(--line);
   position: relative;
 }
-.anri-polaroid .anri-parallax {
+.home-polaroid .home-parallax {
   position: absolute;
   inset: 0 0 -12% 0;
 }
-.anri-polaroid img {
+.home-polaroid img {
   object-fit: cover;
+  /* Zoomed in and nudged left so the subject sits in the middle of the frame. */
+  transform: scale(1.5) translateX(-7%);
 }
-.anri-status {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 13px;
-  color: var(--muted);
-}
-.anri-status i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  position: relative;
-}
-.anri-status i::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: anri-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-@keyframes anri-ping {
-  70%,
-  100% {
-    transform: scale(2.6);
-    opacity: 0;
-  }
-}
-.anri-bio {
+.home-bio {
   font-size: 15.5px;
   color: var(--muted);
   max-width: 46ch;
   margin: 0;
 }
-.anri-bio b {
-  font-weight: 400;
-  color: var(--ink);
-}
-.anri-chips {
-  display: flex;
-  flex-wrap: wrap;
+/* Focus areas: an even grid of equal-width pills, three across (two on phones). */
+.home-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.anri-chips li {
+.home-chips li {
+  text-align: center;
+  white-space: nowrap;
   font-size: 13px;
   color: var(--muted);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 5px 13px;
+  padding: 6px 8px;
 }
-.anri-figures {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  border-top: 1px solid var(--line);
-  padding-top: 18px;
-  margin: 6px 0 0;
-}
-.anri-figures div {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-.anri-figures dt {
-  order: 2;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-.anri-figures dd {
-  order: 1;
-  margin: 0;
-  font-family: var(--anri-display), system-ui, sans-serif;
-  font-weight: 300;
-  font-size: 26px;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-
 /* ---------- Section heads ---------- */
-.anri-head {
+.home-head {
   display: grid;
   gap: 6px;
-  margin-bottom: 72px;
+  margin: 0 auto 72px;
   max-width: 360px;
+  text-align: center;
 }
-.anri-head h2 {
-  font-family: var(--anri-display), system-ui, sans-serif;
+.home-head h2 {
+  font-family: var(--home-display), system-ui, sans-serif;
   font-weight: 300;
   font-size: clamp(44px, 7vw, 68px);
   line-height: 1;
   letter-spacing: -0.02em;
   margin: 0;
+  /* Room for descenders (g, y, p): the reveal's clip-path cuts at the box edge. */
+  padding-block: 0.06em 0.16em;
 }
-.anri-head p {
+.home-head p {
   margin: 0;
   font-size: 13px;
   color: var(--faint);
@@ -273,54 +258,54 @@ html.lenis {
 }
 
 /* ---------- Experience ---------- */
-.anri-job {
+.home-job {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 48px 64px;
   padding-block: 56px;
 }
-.anri-job + .anri-job {
+.home-job + .home-job {
   border-top: 1px solid var(--line);
 }
-.anri-job-side {
+.home-job-side {
   display: grid;
   gap: 14px;
   align-content: start;
 }
-.anri-stamp {
+.home-stamp {
   width: 112px;
   height: 112px;
   color: var(--ink);
   will-change: transform;
 }
-.anri-stamp text {
+.home-stamp text {
   font-size: 9.2px;
   letter-spacing: 0.22em;
   fill: currentColor;
 }
-.anri-stamp .anri-stamp-mono {
-  font-family: var(--anri-display), system-ui, sans-serif;
+.home-stamp .home-stamp-mono {
+  font-family: var(--home-display), system-ui, sans-serif;
   font-size: 26px;
   letter-spacing: 0;
   font-weight: 300;
 }
-.anri-job h3 {
+.home-job h3 {
   margin: 0;
   font-weight: 400;
   font-size: 15.5px;
   line-height: 1.4;
 }
-.anri-meta {
+.home-meta {
   font-size: 13px;
   color: var(--faint);
   margin: -8px 0 0;
   font-variant-numeric: tabular-nums;
 }
-.anri-sum {
+.home-sum {
   margin: 0;
   color: var(--muted);
 }
-.anri-stack {
+.home-stack {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 14px;
@@ -330,7 +315,7 @@ html.lenis {
   font-size: 12.5px;
   color: var(--faint);
 }
-.anri-points {
+.home-points {
   display: grid;
   gap: 22px;
   align-content: start;
@@ -338,75 +323,75 @@ html.lenis {
   padding: 4px 0 0;
   list-style: none;
 }
-.anri-points li {
+.home-points li {
   color: var(--muted);
   max-width: 40ch;
 }
-.anri-points b {
+.home-points b {
   color: var(--ink);
   font-weight: 400;
 }
-.anri-points em {
+.home-points em {
   font-style: normal;
   color: var(--accent);
   margin-right: 2px;
 }
-.anri-points .anri-result {
+.home-points .home-result {
   color: var(--accent);
 }
-.anri-points .anri-result span {
+.home-points .home-result span {
   color: var(--muted);
 }
 
 /* ---------- Works ---------- */
-.anri-works {
+.home-works {
   display: grid;
   gap: 48px;
 }
-.anri-work {
+.home-work {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   border: 1px solid var(--line);
   background: #fff;
 }
-.anri-visual {
+.home-visual {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 3.4;
 }
-.anri-visual .anri-parallax {
+.home-visual .home-parallax {
   position: absolute;
   inset: -8% 0;
 }
-.anri-visual svg {
+.home-visual svg {
   width: 100%;
   height: 100%;
   display: block;
 }
-.anri-work-info {
+.home-work-info {
   padding: 28px 28px 26px;
   display: grid;
   gap: 10px;
   align-content: end;
   min-width: 0;
 }
-.anri-work-info h3 {
+.home-work-info h3 {
   margin: 0 0 6px;
   font-weight: 400;
   font-size: 15.5px;
 }
-.anri-line {
+.home-line {
   margin: 0;
   font-size: 13.5px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
-.anri-desc {
+.home-desc {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 14px;
 }
-.anri-outcome {
+.home-outcome {
   margin: 10px 0 0;
   padding-top: 12px;
   border-top: 1px solid var(--line);
@@ -415,13 +400,13 @@ html.lenis {
 }
 
 /* ---------- Background ---------- */
-.anri-rows {
+.home-rows {
   margin: 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--line);
 }
-.anri-rows li {
+.home-rows li {
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr) minmax(0, 0.8fr);
   gap: 16px;
@@ -429,247 +414,200 @@ html.lenis {
   border-bottom: 1px solid var(--line);
   font-size: 14px;
 }
-.anri-rows .y {
+.home-rows .y {
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
-.anri-rows .o {
+.home-rows .o {
   color: var(--muted);
 }
 
 /* ---------- Footer ---------- */
-.anri-footer {
+.home-footer {
   position: relative;
   background: var(--night);
   color: var(--night-ink);
   overflow: hidden;
-  min-height: 640px;
+  /* Fill the whole viewport so the page ends on the footer, not on a strip of white above it. */
+  min-height: 100vh;
+  min-height: 100svh;
+  /* Keep the footer's top line clear of the fixed rail and clock that now sit over it. */
+  padding-top: 160px;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr;
 }
-.anri-grid-lines {
+/* Same split as the About hero: one hairline down the middle. */
+.home-grid-lines {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   pointer-events: none;
 }
-.anri-grid-lines span {
+.home-grid-lines span {
   border-right: 1px solid var(--night-line);
 }
-.anri-foot-top {
-  position: relative;
-  border-bottom: 1px solid var(--night-line);
-  padding: 22px max(28px, env(safe-area-inset-right, 0px)) 22px max(var(--edge), env(safe-area-inset-left, 0px));
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 13px;
-  color: var(--night-muted);
-}
-.anri-foot-body {
+.home-foot-body {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: end;
   padding-bottom: 190px;
 }
-.anri-name {
-  grid-column: 1 / 3;
-  margin: 0;
-  padding-left: max(var(--edge), env(safe-area-inset-left, 0px));
-  font-family: var(--anri-display), system-ui, sans-serif;
+.home-name {
+  grid-column: 1;
   font-weight: 300;
-  font-size: clamp(40px, 7.4vw, 104px);
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+  --bigname-rule: var(--night-line);
 }
-.anri-name span {
-  display: block;
-  padding-left: 1.1em;
-}
-.anri-reach {
+.home-reach {
   display: grid;
   gap: 20px;
   justify-items: start;
-  padding-left: 28px;
+  padding-left: 48px;
   padding-right: max(28px, env(safe-area-inset-right, 0px));
   position: relative;
   z-index: 1;
 }
-.anri-mail {
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
-  border: 1px solid var(--night-ink);
-  background: transparent;
-  color: var(--night-ink);
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-  transition:
-    background 0.35s,
-    color 0.35s,
-    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.anri-mail:hover {
-  background: var(--night-ink);
-  color: var(--night);
-  transform: scale(1.06);
-}
-.anri-addr {
-  font-size: 13px;
-  color: var(--night-muted);
-  user-select: all;
-}
-.anri-socials {
+.home-socials {
   display: grid;
-  gap: 4px;
-  font-size: 13px;
+  gap: 10px;
+  font-size: 17px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.anri-socials a {
+.home-socials a {
   color: var(--night-muted);
   transition: color 0.3s;
 }
-.anri-socials a:hover {
+.home-socials a:hover {
   color: var(--night-ink);
 }
-.anri-wave {
+.home-wave {
   position: absolute;
-  left: 66.66%;
+  left: 50%;
   bottom: 0;
-  width: 33.34%;
+  width: 50%;
   height: 150px;
   display: block;
 }
-.anri-wave path {
+.home-wave path {
   fill: #4a4744;
-}
-
-/* ---------- Reveal ---------- */
-.anri-reveal {
-  transition:
-    opacity 0.9s ease,
-    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.anri-reveal.is-pre {
-  opacity: 0.2;
-  transform: translateY(22px);
 }
 
 /* ---------- Narrow ---------- */
 @media (max-width: 1080px) {
-  .anri {
-    --edge: 28px;
-  }
-  .anri-rail {
+  .home-rail {
     width: auto;
     right: 0;
     bottom: auto;
     padding: calc(14px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 14px
       max(16px, env(safe-area-inset-left, 0px));
     background: color-mix(in srgb, var(--paper) 88%, transparent);
+    transition: background-color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  .anri-rail nav {
+  .home-footer {
+    padding-top: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  .home-rail[data-on-dark] {
+    background: color-mix(in srgb, var(--night) 88%, transparent);
+  }
+  .home-rail nav {
     flex-direction: row;
     gap: 18px;
   }
-  .anri-rail nav a::before {
+  .home-rail nav a::before {
     display: none;
   }
-  .anri-track {
-    display: none;
-  }
-  .anri-clock {
+  .home-clock {
     top: calc(14px + env(safe-area-inset-top, 0px));
     right: max(16px, env(safe-area-inset-right, 0px));
     font-size: 12px;
   }
-  .anri-clock br {
+  .home .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  /* Narrow: name first (left-aligned, second line indented), then portrait and intro. */
+  .home-hero-name {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 120px 0 28px;
+  }
+  /* Narrow: the big name goes left-aligned with the second line indented (hero and footer). */
+  .home-bigname {
+    font-size: clamp(40px, 12vw, 96px);
+  }
+  .home-bigname span {
+    text-align: left;
+    padding-inline: max(16px, env(safe-area-inset-left, 0px)) 16px;
+  }
+  .home-bigname span + span {
+    padding-left: calc(max(16px, env(safe-area-inset-left, 0px)) + 0.6em);
+  }
+  .home-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-polaroid {
+    width: min(280px, 100%);
+  }
+  .home-hero-intro {
+    width: auto;
+    justify-self: stretch;
+    padding: 40px max(16px, env(safe-area-inset-left, 0px)) 64px;
+  }
+  /* Footer stacks like the hero: name, then links; no centre line. */
+  .home-grid-lines {
     display: none;
   }
-  .anri .anri-hero {
-    padding-top: 110px;
-  }
-}
-@media (max-width: 720px) {
-  .anri section {
-    padding-block: 80px;
-  }
-  .anri-rail nav {
-    gap: 13px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .anri-rail nav a {
-    font-size: 13px;
-    white-space: nowrap;
-  }
-  .anri-head {
-    margin-bottom: 40px;
-  }
-  .anri-job {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding-block: 44px;
-  }
-  .anri-work {
-    grid-template-columns: 1fr;
-  }
-  .anri-rows li {
-    grid-template-columns: 56px minmax(0, 1fr);
-  }
-  .anri-rows .o {
-    grid-column: 2;
-    margin-top: -12px;
-  }
-  .anri-figures dd {
-    font-size: 22px;
-  }
-  .anri-clock {
-    display: none;
-  }
-  .anri-footer {
-    min-height: 560px;
-  }
-  .anri-grid-lines {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .anri-foot-body {
+  .home-foot-body {
     grid-template-columns: 1fr;
     gap: 40px;
     padding-top: 80px;
     padding-bottom: 180px;
   }
-  .anri-name {
-    grid-column: 1;
+  .home-reach {
     padding-left: max(16px, env(safe-area-inset-left, 0px));
   }
-  .anri-reach {
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-  }
-  .anri-wave {
+  .home-wave {
     left: 0;
     width: 100%;
     height: 120px;
   }
-  .anri-foot-top {
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
-  }
 }
-@media (prefers-reduced-motion: reduce) {
-  .anri-reveal,
-  .anri-reveal.is-pre {
-    opacity: 1;
-    transform: none;
-    transition: none;
+@media (max-width: 720px) {
+  .home section {
+    padding-block: 80px;
   }
-  .anri-status i::after {
-    animation: none;
+  .home-rail nav {
+    gap: 13px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .home-rail nav a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .home-head {
+    margin-bottom: 40px;
+  }
+  .home-job {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: 44px;
+  }
+  .home-work {
+    grid-template-columns: 1fr;
+  }
+  .home-rows li {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+  .home-rows .o {
+    grid-column: 2;
+    margin-top: -12px;
+  }
+  .home-clock {
+    display: none;
   }
 }

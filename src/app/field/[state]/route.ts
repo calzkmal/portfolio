@@ -2,9 +2,8 @@ import { FIELD_STATES, type FieldState } from "@/data/scenes";
 import { getLayout, VIEW } from "@/components/field/targets";
 
 /**
- * Static SVG posters of each field state, e.g. /field/hiroop.svg.
- * Generated at build time from the same layouts as the live WebGL field, so
- * the fallback (no JS, reduced motion, small screens, no WebGL) always matches.
+ * Static SVG posters of each field state, e.g. /field/emodu.svg, shown on the
+ * project pages. Generated at build time from src/components/field/targets.ts.
  */
 export const dynamic = "force-static";
 
@@ -26,8 +25,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ state: 
   const { positions, tones } = getLayout(state, POINTS);
   const { rx, ry } = VIEW[state];
   const [sx, cx, sy, cy] = [Math.sin(rx), Math.cos(rx), Math.sin(ry), Math.cos(ry)];
-  const dark = state === "contact";
-  const ink = dark ? "#F3F5F3" : "#082E43";
+  const ink = "#082E43";
 
   const pts: { x: number; y: number; z: number; tone: number }[] = [];
   for (let i = 0; i < POINTS; i++) {

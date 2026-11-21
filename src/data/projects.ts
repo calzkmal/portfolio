@@ -145,8 +145,6 @@ export const allProjects: Project[] = [
 /** Projects shown on the site. Set `archived: true` on an entry to hide it everywhere. */
 export const projects: Project[] = allProjects.filter((p) => !p.archived);
 
-export const projectCategories = Array.from(new Set(projects.map((p) => p.category)));
-
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }

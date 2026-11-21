@@ -3,7 +3,7 @@
 import { gsap } from "./gsap";
 
 /**
- * The single orchestrated entrance (motion-spec §4, scene 0): lines marked
+ * Entrance for the inner pages: lines marked
  * `data-intro="line"` rise through their masks, then `data-intro="fade"`
  * elements fade in. Runs on first load and after each route change.
  * Elements are only hidden (by CSS) when <html> has the `motion` class.

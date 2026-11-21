@@ -11,7 +11,6 @@ export function Plate({
   illustrative = false,
   className,
   ratio = "aspect-[4/3]",
-  poster = false,
   priority = false,
 }: {
   src: string;
@@ -20,12 +19,10 @@ export function Plate({
   illustrative?: boolean;
   className?: string;
   ratio?: string;
-  /** Field poster: hidden while the live 3D field is running. */
-  poster?: boolean;
   priority?: boolean;
 }) {
   return (
-    <figure className={cn("w-full", className)} data-poster={poster ? "" : undefined}>
+    <figure className={cn("w-full", className)}>
       <div className={cn("relative overflow-hidden rounded-plate", ratio)}>
         {/* Plain <img>: posters are small SVGs and must not go through the image optimizer. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}

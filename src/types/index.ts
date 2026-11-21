@@ -19,7 +19,6 @@ export interface Profile {
   location: string;
   /** Optional badge above your name on the home page, e.g. "Open to new opportunities". Leave out to hide it. */
   availability?: string;
-  email: string;
   /** Path inside /public. Replace with your own photo (e.g. /images/profile.jpg). */
   avatar: string;
   avatarAlt: string;
@@ -42,6 +41,8 @@ export interface Education {
   summary: string;
   highlights: string[];
   coursework?: string[];
+  /** Home page: the round stamp — two or three initials and the text that runs around the ring. */
+  stamp?: { initials: string; ring: string };
 }
 
 export interface Experience {

@@ -7,7 +7,7 @@ export const profile: Profile = {
   name: "Calzy Akmal Indyramdhani",
   initials: "C",
   title: "Software Engineer — AI Automation & Data",
-  tagline: "I turn complex workflows into practical AI-powered automation, data pipelines and LLM applications.",
+  tagline: "I turn complex ideas into practical solution through comprehensive research.",
   intro:
     "Software Engineering graduate with experience building AI-powered automation, data pipelines and LLM applications. Skilled in Python, n8n and API integration.",
   about: [
@@ -15,7 +15,6 @@ export const profile: Profile = {
     "I've architected an AI-powered financial content platform with production workflows and 20+ AI agents, automated API-based data collection and dashboards during my data science internship, fine-tuned LLMs with LoRA, and I'm currently building iOS apps at the Apple Developer Academy @ UC Jakarta.",
   ],
   location: "Bandung, Indonesia",
-  email: "calzkmal@gmail.com",
   avatar: "/images/avatar.jpeg",
   avatarAlt: "Portrait of Calzy Akmal Indyramdhani",
   resume: "/resume.pdf",

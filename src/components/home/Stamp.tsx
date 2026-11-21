@@ -21,7 +21,7 @@ export function Stamp({ initials, ring, reverse = false }: { initials: string; r
   );
 
   return (
-    <svg ref={ref} className="anri-stamp" viewBox="0 0 120 120" aria-hidden="true">
+    <svg ref={ref} className="home-stamp" viewBox="0 0 120 120" aria-hidden="true">
       <defs>
         <path id={pathId} d="M60,60 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0" />
       </defs>
@@ -30,7 +30,7 @@ export function Stamp({ initials, ring, reverse = false }: { initials: string; r
       <text>
         <textPath href={`#${pathId}`}>{ring}</textPath>
       </text>
-      <text className="anri-stamp-mono" x="60" y="69" textAnchor="middle">
+      <text className="home-stamp-mono" x="60" y="69" textAnchor="middle">
         {initials}
       </text>
     </svg>

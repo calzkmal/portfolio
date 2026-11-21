@@ -5,15 +5,13 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "./gsap";
 import { playIntro } from "./intro";
-import { lenisRef as shared } from "./lenisRef";
 
 /**
- * One scroll system for the whole site.
+ * Scroll and entrance motion for the inner pages (the home page runs its own Lenis, see components/home).
  *
  * - Lenis smooths wheel scrolling on desktop with a fine pointer only. Touch
  *   devices and reduced-motion visitors keep native scrolling.
- * - Lenis is driven by GSAP's ticker, the only animation loop on the page
- *   (the 3D field renders from the same ticker).
+ * - Lenis is driven by GSAP's ticker, the only animation loop on the page.
  * - On route changes: jump to the top and re-measure every ScrollTrigger once
  *   fonts have loaded.
  */
@@ -32,7 +30,6 @@ export function MotionProvider() {
         anchors: { offset: -64 },
       });
       lenisRef.current = lenis;
-      shared.set(lenis);
       lenis.on("scroll", ScrollTrigger.update);
       const tick = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(tick);
@@ -43,7 +40,6 @@ export function MotionProvider() {
         gsap.ticker.lagSmoothing(500, 33);
         lenis.destroy();
         lenisRef.current = null;
-        shared.set(null);
       };
     });
     return () => mm.revert();
