@@ -35,7 +35,7 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
 
         <BadgeList items={project.technologies} max={4} className="mt-4" />
 
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent-strong">
           View Details
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>

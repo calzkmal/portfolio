@@ -11,28 +11,29 @@ const config: Config = {
     extend: {
       colors: {
         // Change these values to re-theme the whole site.
-        canvas: "#fafaf8",
-        surface: "#ffffff",
+        // Palette: Ice Blue #C9DFEA, Midnight Ink #082E43, Vermillion #FF4F31.
+        canvas: "#C9DFEA", // Ice Blue — page background
+        surface: "#F7FBFD", // cards on top of Ice Blue
         ink: {
-          DEFAULT: "#16181d",
-          soft: "#454a54",
-          muted: "#757b87",
+          DEFAULT: "#082E43", // Midnight Ink — headings and body text
+          soft: "#1F4558",
+          muted: "#3E5F72",
         },
-        line: "#e7e5df",
+        line: "#A9C6D4",
         accent: {
-          DEFAULT: "#2f5d50",
-          soft: "#e8f0ed",
-          strong: "#244a40",
+          DEFAULT: "#FF4F31", // Vermillion — buttons, dots, icons, highlights
+          soft: "#FFE4DE",
+          strong: "#A82A14", // darker Vermillion for small text (readable on Ice Blue and white)
         },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(22,24,29,0.04), 0 8px 24px -12px rgba(22,24,29,0.10)",
-        lift: "0 2px 4px rgba(22,24,29,0.04), 0 18px 40px -16px rgba(22,24,29,0.18)",
+        card: "0 1px 2px rgba(8,46,67,0.04), 0 8px 24px -12px rgba(8,46,67,0.10)",
+        lift: "0 2px 4px rgba(8,46,67,0.04), 0 18px 40px -16px rgba(8,46,67,0.18)",
       },
       keyframes: {
         "fade-up": {

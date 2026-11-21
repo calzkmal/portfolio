@@ -10,7 +10,6 @@
 
   body {
     @apply bg-canvas font-sans text-ink antialiased;
-    font-feature-settings: "cv11", "ss01";
   }
 
   h1,
@@ -30,7 +29,7 @@
 
 @layer components {
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.16em] text-accent;
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-accent-strong;
   }
 
   .card {

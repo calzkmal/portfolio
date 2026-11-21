@@ -69,7 +69,7 @@ export function AchievementsGrid({ items }: { items: Achievement[] }) {
               <Reveal delay={(i % 2) * 80} className="h-full">
                 <article className="card group flex h-full flex-col p-6 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-lift">
                   <div className="flex items-start justify-between gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-strong transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <Badge variant="outline">{item.category}</Badge>
@@ -86,7 +86,7 @@ export function AchievementsGrid({ items }: { items: Achievement[] }) {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent-strong hover:underline"
                     >
                       View credential
                       <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />

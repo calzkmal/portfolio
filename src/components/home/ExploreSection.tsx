@@ -45,7 +45,7 @@ export function ExploreSection() {
                 className="card group flex h-full flex-col p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-lift"
               >
                 <span className="flex items-center justify-between">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent-strong transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <ArrowUpRight

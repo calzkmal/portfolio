@@ -16,9 +16,9 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#fafaf8",
+          background: "#C9DFEA",
           padding: 80,
-          fontFamily: "Georgia, serif",
+          fontFamily: "sans-serif",
         }}
       >
         <div
@@ -29,7 +29,7 @@ export default function OpenGraphImage() {
             width: 72,
             height: 72,
             borderRadius: 36,
-            background: "#2f5d50",
+            background: "#FF4F31",
             color: "white",
             fontSize: 30,
           }}
@@ -37,9 +37,9 @@ export default function OpenGraphImage() {
           {profile.initials}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 88, color: "#16181d", lineHeight: 1.05 }}>{profile.name}</div>
-          <div style={{ fontSize: 40, color: "#2f5d50", marginTop: 16 }}>{profile.title}</div>
-          <div style={{ fontSize: 26, color: "#757b87", marginTop: 24 }}>{profile.tagline}</div>
+          <div style={{ fontSize: 88, color: "#082E43", lineHeight: 1.05 }}>{profile.name}</div>
+          <div style={{ fontSize: 40, color: "#A82A14", marginTop: 16 }}>{profile.title}</div>
+          <div style={{ fontSize: 26, color: "#3E5F72", marginTop: 24 }}>{profile.tagline}</div>
         </div>
       </div>
     ),

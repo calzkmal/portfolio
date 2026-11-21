@@ -16,8 +16,8 @@ export const profile: Profile = {
   ],
   location: "Bandung, Indonesia",
   email: "calzkmal@gmail.com",
-  avatar: "/images/avatar.svg",
-  avatarAlt: "Avatar with the initial C",
+  avatar: "/images/avatar.jpeg",
+  avatarAlt: "Portrait of Calzy Akmal Indyramdhani",
   resume: "/resume.pdf",
   socials: [
     { label: "GitHub", href: "https://github.com/calzkmal", icon: "github" },

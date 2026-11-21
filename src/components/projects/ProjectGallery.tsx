@@ -39,7 +39,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
           href={current.src}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 text-sm font-medium text-accent hover:underline"
+          className="shrink-0 text-sm font-medium text-accent-strong hover:underline"
         >
           Open full size
         </a>

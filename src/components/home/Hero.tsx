@@ -31,7 +31,7 @@ export function Hero() {
           >
             Hi, I&apos;m {profile.name}.
           </h1>
-          <p className="mt-4 animate-fade-up font-display text-2xl text-accent sm:text-3xl" style={delay(180)}>
+          <p className="mt-4 animate-fade-up font-display text-2xl text-accent-strong sm:text-3xl" style={delay(180)}>
             {profile.title}
           </p>
           <p className="mt-6 max-w-xl animate-fade-up text-lg leading-relaxed text-ink-soft" style={delay(260)}>

@@ -66,7 +66,7 @@ function Section({
     <Reveal>
       <section aria-labelledby={id} className="scroll-mt-24">
         <h2 id={id} className="flex items-center gap-3 font-display text-2xl font-medium tracking-tight">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent-strong">
             <Icon className="h-[18px] w-[18px]" />
           </span>
           {title}
@@ -249,7 +249,7 @@ export default async function ProjectPage({ params }: PageProps) {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-medium text-accent hover:underline"
+                    className="flex items-center gap-2 font-medium text-accent-strong hover:underline"
                   >
                     <ExternalLink className="h-4 w-4" aria-hidden="true" /> Live demo
                   </a>
@@ -259,7 +259,7 @@ export default async function ProjectPage({ params }: PageProps) {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-medium text-accent hover:underline"
+                    className="flex items-center gap-2 font-medium text-accent-strong hover:underline"
                   >
                     <GithubIcon className="h-4 w-4" /> Source code
                   </a>
