@@ -1,65 +1,51 @@
-import { Award, Calendar, GraduationCap, MapPin } from "lucide-react";
 import type { Education } from "@/types";
-import { Badge } from "@/components/ui/Badge";
+import { MetaList } from "@/components/ui/Meta";
 
-export function EducationCard({ item }: { item: Education }) {
+/** One period of study, set as an editorial entry. */
+export function EducationEntry({ item }: { item: Education }) {
   return (
-    <article className="card p-6 transition-shadow duration-500 hover:shadow-lift sm:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h3 className="font-display text-2xl font-medium tracking-tight">{item.institution}</h3>
-          <p className="mt-1 flex items-center gap-2 text-ink-soft">
-            <GraduationCap className="h-4 w-4 text-accent" aria-hidden="true" />
-            {item.degree} {item.field}
-          </p>
-        </div>
-        <Badge variant="accent">Class of {item.graduationYear}</Badge>
+    <article id={item.id} aria-labelledby={`${item.id}-title`} className="grid scroll-mt-24 gap-8 border-t border-rule py-12 lg:grid-cols-12 lg:gap-6">
+      <div className="lg:col-span-4">
+        <p className="font-mono text-meta tabular-nums text-ink-3">{item.period}</p>
+        <h2 id={`${item.id}-title`} className="mt-3 font-serif text-h2 text-ink">
+          {item.institution}
+        </h2>
+        <p className="mt-2 font-medium text-ink">
+          {item.degree}, {item.field}
+        </p>
+        <MetaList
+          className="mt-6"
+          items={[
+            { label: "Location", value: item.location },
+            item.grade ? { label: "Grade", value: item.grade } : null,
+          ]}
+        />
       </div>
 
-      <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
-        <div className="flex items-center gap-1.5">
-          <dt className="sr-only">Period</dt>
-          <Calendar className="h-4 w-4" aria-hidden="true" />
-          <dd>{item.period}</dd>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <dt className="sr-only">Location</dt>
-          <MapPin className="h-4 w-4" aria-hidden="true" />
-          <dd>{item.location}</dd>
-        </div>
-        {item.grade && (
-          <div className="flex items-center gap-1.5">
-            <dt className="sr-only">Grade</dt>
-            <Award className="h-4 w-4" aria-hidden="true" />
-            <dd>{item.grade}</dd>
+      <div className="space-y-8 lg:col-span-7 lg:col-start-6">
+        <p className="max-w-lead text-lead text-ink-2">{item.summary}</p>
+
+        {item.highlights.length > 0 && (
+          <div>
+            <h3 className="text-meta text-ink-3">Highlights</h3>
+            <ul className="mt-3 max-w-measure space-y-2.5 text-ink-2">
+              {item.highlights.map((h) => (
+                <li key={h} className="relative pl-5">
+                  <span aria-hidden="true" className="absolute left-0 top-[0.7em] h-1 w-1 rounded-full bg-ink-3" />
+                  {h}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-      </dl>
 
-      <p className="mt-5 leading-relaxed text-ink-soft">{item.summary}</p>
-
-      <h4 className="mt-6 text-sm font-semibold">Academic highlights</h4>
-      <ul className="mt-3 space-y-2.5">
-        {item.highlights.map((h) => (
-          <li key={h} className="flex gap-3 text-sm leading-relaxed text-ink-soft">
-            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-            {h}
-          </li>
-        ))}
-      </ul>
-
-      {item.coursework && (
-        <>
-          <h4 className="mt-6 text-sm font-semibold">Relevant coursework</h4>
-          <ul className="mt-3 flex flex-wrap gap-1.5">
-            {item.coursework.map((c) => (
-              <li key={c}>
-                <Badge>{c}</Badge>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+        {item.coursework && item.coursework.length > 0 && (
+          <div>
+            <h3 className="text-meta text-ink-3">Relevant coursework</h3>
+            <p className="mt-3 max-w-measure text-ink-2">{item.coursework.join(", ")}</p>
+          </div>
+        )}
+      </div>
     </article>
   );
 }

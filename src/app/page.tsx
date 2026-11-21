@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/home/Hero";
-import { AboutSection } from "@/components/home/AboutSection";
-import { FeaturedProjects } from "@/components/home/FeaturedProjects";
-import { ExploreSection } from "@/components/home/ExploreSection";
-import { ContactCta } from "@/components/home/ContactCta";
+import { ArrivalScene } from "@/components/scenes/ArrivalScene";
+import { MethodScene } from "@/components/scenes/MethodScene";
+import { WorkScene } from "@/components/scenes/WorkScene";
+import { TrajectoryScene } from "@/components/scenes/TrajectoryScene";
+import { RecognitionScene } from "@/components/scenes/RecognitionScene";
+import { ContactScene } from "@/components/scenes/ContactScene";
+import { HomeDirector } from "@/components/motion/HomeDirector";
+import { FieldStage } from "@/components/field/FieldStage";
 import { profile } from "@/data/profile";
 import { siteConfig } from "@/data/site";
 
@@ -26,15 +29,17 @@ export default function HomePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Hero />
-      <AboutSection />
-      <FeaturedProjects />
-      <ExploreSection />
-      <ContactCta />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <FieldStage />
+      <div className="relative z-[1]">
+        <ArrivalScene />
+        <MethodScene />
+        <WorkScene />
+        <TrajectoryScene />
+        <RecognitionScene />
+        <ContactScene />
+      </div>
+      <HomeDirector />
     </>
   );
 }
