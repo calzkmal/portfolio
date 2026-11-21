@@ -55,6 +55,12 @@ export interface Experience {
   responsibilities: string[];
   achievements: string[];
   technologies: string[];
+  /** Home page: the round stamp — two or three initials and the text that runs around the ring. */
+  stamp?: { initials: string; ring: string };
+  /** Home page: numbered points (#1, #2…) — a short lead plus one sentence each. */
+  highlights?: { title: string; text: string }[];
+  /** Home page: the "As a result" line. */
+  result?: string;
 }
 
 export type ProjectCategory =

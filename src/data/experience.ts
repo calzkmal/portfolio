@@ -21,6 +21,12 @@ export const experience: Experience[] = [
       "Won 3rd place at the Academy-level Very Disco Local Game Jam with StackHouse.",
     ],
     technologies: ["Swift", "iOS", "TestFlight"],
+    stamp: { initials: "AD", ring: "APPLE DEVELOPER ACADEMY · JAKARTA · " },
+    highlights: [
+      { title: "End-to-end ownership.", text: "Led development across 4 challenges, turning ideas into working iOS applications." },
+      { title: "Hardware-aware interaction.", text: "Built apps that use motion sensing, device connectivity and haptic feedback." },
+    ],
+    result: "Reached 100+ TestFlight testers and won 3rd place at the Very Disco Local Game Jam with StackHouse.",
   },
   {
     id: "senja-solusi",
@@ -39,6 +45,13 @@ export const experience: Experience[] = [
       "Reduced web scraping costs by ~50% through relevance filtering and deduplication.",
     ],
     technologies: ["Python", "n8n", "LLMs", "AI Agents", "Web Scraping", "REST APIs"],
+    stamp: { initials: "SS", ring: "PT SENJA SOLUSI · BANDUNG · AUTOMATION · " },
+    highlights: [
+      { title: "Agent architecture.", text: "Designed a financial content platform running 4 production workflows and 20+ AI agents." },
+      { title: "Reusable building blocks.", text: "Built 18+ reusable prompt modules and 10+ quality-assurance reviewers to keep the workflows scalable." },
+      { title: "Token budget.", text: "Optimized LLM token usage across every workflow." },
+    ],
+    result: "Cut web scraping costs by about 50% through relevance filtering and deduplication.",
   },
   {
     id: "kalbe-nutritionals",
@@ -58,5 +71,12 @@ export const experience: Experience[] = [
       "Delivered 5+ dashboards to support business decisions.",
     ],
     technologies: ["Python", "REST APIs", "Data Dashboards"],
+    stamp: { initials: "KN", ring: "KALBE NUTRITIONALS · BUSINESS INSIGHT · " },
+    highlights: [
+      { title: "Data quality.", text: "Kept 10+ macroeconomic data categories consistent and accurate." },
+      { title: "Automated collection.", text: "Moved data gathering to automated, API-based collection." },
+      { title: "Decision dashboards.", text: "Combined internal and external data into dashboards for the business." },
+    ],
+    result: "Collection time dropped to under 1 minute, and 5+ dashboards went to the business.",
   },
 ];

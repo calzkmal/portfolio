@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { MotionProvider } from "@/components/motion/MotionProvider";
 import { siteConfig } from "@/data/site";
 import { profile } from "@/data/profile";
 
@@ -95,12 +92,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main" className="relative flex-1">
-          {children}
-        </main>
-        <Footer />
-        <MotionProvider />
+        {/* The home page brings its own layout and Lenis setup; inner pages use app/(site)/layout.tsx. */}
+        {children}
       </body>
     </html>
   );
