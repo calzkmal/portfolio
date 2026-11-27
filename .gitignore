@@ -46,3 +46,8 @@ yarn-error.log*
 
 # local notes
 prompt.txt
+
+# LaTeX build output
+cv/*.pdf
+cv/*.log
+cv/*.synctex.gz

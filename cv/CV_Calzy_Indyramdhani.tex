@@ -1,0 +1,160 @@
+\documentclass[10pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \input{glyphtounicode}
+  \pdfgentounicode=1 % keeps the PDF text readable by ATS
+\fi
+\usepackage{XCharter} % same font in pdfLaTeX (Overleaf) and XeTeX (Tectonic)
+\usepackage[top=1.3cm,bottom=1.3cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Layout ----------
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\titleformat{\section}{\large\bfseries}{}{0pt}{\MakeUppercase}[\vspace{1pt}\titlerule]
+\titlespacing*{\section}{0pt}{7pt}{4pt}
+
+\setlist[itemize]{leftmargin=1.3em,itemsep=0pt,parsep=0pt,topsep=2pt}
+
+% ---------- Commands ----------
+% \entry{Organization}{Location}{Role}{Date}
+\newcommand{\entry}[4]{%
+  \textbf{#1}\hfill #2\par
+  \textit{#3}\hfill #4\par
+}
+% \project{Name}{Role}{Date}{Technologies}
+\newcommand{\project}[4]{%
+  \textbf{#1}\par
+  \textit{#2}\hfill #3\par
+  \textbf{Technologies:} #4\par
+}
+\newcommand{\entrygap}{\vspace{4pt}}
+
+\begin{document}
+
+% ---------- Header ----------
+\begin{center}
+  {\LARGE\bfseries Calzy Akmal Indyramdhani}\\[4pt]
+  \small
+  Bandung, Indonesia \ \textbar\
+  \href{mailto:calzkmal@gmail.com}{\textbf{Email}} \ \textbar\
+  \href{https://linkedin.com/in/calzkmal}{\textbf{LinkedIn}} \ \textbar\
+  \href{https://github.com/calzkmal}{\textbf{GitHub}} \ \textbar\
+  \href{https://caindyramdhani.vercel.app/}{\textbf{Portfolio}}
+\end{center}
+
+% ---------- Summary ----------
+\section{Professional Summary}
+Software Engineering graduate with experience building AI-powered automation, data pipelines, and LLM applications. Skilled in Python, n8n, and API integration, with a focus on turning complex workflows into practical solutions.
+
+% ---------- Experience ----------
+\section{Work Experience}
+
+\entry{Apple Developer Academy @ UC Jakarta}{Jakarta, Indonesia}
+      {iOS Developer Learner $\cdot$ Contract}{Mar 2026 -- Present}
+\begin{itemize}
+  \item Led end-to-end development across 4 challenges, transforming ideas into functional iOS applications.
+  \item Developed interactive applications integrating motion sensing, device connectivity, and haptic feedback, reaching 100+ TestFlight testers.
+  \item Won 3rd place at the Academy-level Very Disco Local Game Jam with StackHouse.
+\end{itemize}
+\entrygap
+
+\entry{PT Senja Solusi}{Bandung, Indonesia}
+      {AI Automation $\cdot$ Contract}{Nov 2025 -- Aug 2026}
+\begin{itemize}
+  \item Architected an AI-powered financial content platform with 4 production workflows and 20+ AI agents.
+  \item Reduced web scraping costs by $\sim$50\% through relevance filtering and deduplication, while optimizing LLM token usage.
+  \item Engineered scalable AI workflows with 18+ reusable prompt modules, 10+ quality assurance reviewers.
+\end{itemize}
+\entrygap
+
+\entry{Kalbe Nutritionals (PT Sanghiang Perkasa)}{Jakarta, Indonesia}
+      {Business Insight and Data Scientist Intern $\cdot$ Internship}{Mar 2025 -- Sep 2025}
+\begin{itemize}
+  \item Managed 10+ macroeconomic data categories, ensuring consistency, accuracy, and quality.
+  \item Automated API-based data collection, reducing processing time to under 1 minute.
+  \item Developed 5+ dashboards integrating internal and external data to support business decisions.
+\end{itemize}
+
+% ---------- Projects ----------
+\section{Projects}
+
+\project{Seagis iOS App}{Data Orchestrator}{Oct 2026 -- Present}
+        {Swift, Python, PostgreSQL, Supabase, GitHub, Spec-Driven Development (SDD)}
+\begin{itemize}
+  \item Built an environmental data pipeline integrating IoT temperature readings and regional data. Designed data contracts and quality checks to support traceable, hourly data alignment.
+  \item Applied SDD to define implementation scope and testable requirements.
+\end{itemize}
+\entrygap
+
+\project{Hiroop -- Respiration Audio Classifier}{Machine Learning Engineer}{Nov 2024 -- Dec 2024}
+        {Python, Flask, TensorFlow, Keras, Librosa, NumPy, REST API}
+\begin{itemize}
+  \item Built a Flask API that processes WAV recordings and returns predictions across five respiratory sound classes. Developed an audio feature extraction pipeline using MFCC, Mel spectrograms, and chroma.
+  \item Won 1st place in Turnamen Sains Data Nasional (TSDN) 2024.
+\end{itemize}
+\entrygap
+
+\project{Emodu -- LLM Fine-Tuning for Affective Text Generation}{AI Engineer}{Dec 2024 -- Jan 2025}
+        {Python, Llama 3.2 1B, Unsloth, PEFT/LoRA, Ollama, FastAPI, Hugging Face}
+\begin{itemize}
+  \item Fine-tuned Llama 3.2 1B using LoRA to generate emotion-aware motivational text for students.
+  \item Evaluated the model on 112 test examples, improving BERTScore F1 from 0.6878 to 0.7238 against base model.
+\end{itemize}
+
+\project{Fluxync -- NSFW Image Detection Model}{Machine Learning Engineer}{Jun 2024 -- Jul 2024}
+        {Python, CNN, FastAPI, TensorFlow, Keras}
+\begin{itemize}
+  \item Designed and implemented a CNN-based model for detecting NSFW images.
+  \item Achieved 95\% accuracy on a test set of 1280 images, outperforming baseline models.
+\end{itemize}
+
+% ---------- Education ----------
+\section{Education}
+
+\entry{Universitas Pendidikan Indonesia}{Bandung, Indonesia}
+      {Bachelor's Degree in Software Engineering}{Aug 2021 -- Jan 2025}
+GPA: 3.90 / 4.00\par
+\textbf{Relevant coursework:} Data Structures and Algorithms, Machine Learning, Artificial Intelligence.\par
+\entrygap
+
+\entry{University of Western Ontario}{London, Canada}
+      {Student Exchange $\cdot$ Social Sciences}{Sep 2023 -- Dec 2023}
+\textbf{Relevant coursework:} Computer Science, Earth Science, History, Sociology.\par
+
+% ---------- Leadership ----------
+\section{Leadership \& Activities}
+
+\entry{IISMA Alumni Club}{Jakarta, Indonesia}
+      {Record Keeper}{Jan 2025 -- Dec 2025}
+\begin{itemize}
+  \item Integrated three platforms to streamline data collection and maintain reliable, accessible records.
+  \item Delivered 3+ actionable monthly reports to support stakeholder decision-making.
+\end{itemize}
+\entrygap
+
+\entry{Himpunan Mahasiswa Rekayasa Perangkat Lunak}{Bandung, Indonesia}
+      {Executive Lead}{Jan 2023 -- Dec 2023}
+\begin{itemize}
+  \item Led eight departments and coordinated development initiatives for 50+ members.
+  \item Achieved 90\% stakeholder satisfaction through 20+ work programs.
+\end{itemize}
+
+% ---------- Additional ----------
+\section{Additional Information}
+
+\textbf{Technical Skills:} Python, Swift, SQL, LLM fine-tuning, LoRA, TensorFlow, Keras, n8n, FastAPI, Flask, REST APIs, PostgreSQL, Supabase, Git, Spec-Driven Development.\par
+\vspace{2pt}
+\textbf{Languages:} Indonesian (native), English (professional proficiency)\par
+\vspace{2pt}
+\textbf{Awards:} 1st place of Turnamen Sains Data Nasional (TSDN) 2024 by Data Academy
+
+\end{document}
